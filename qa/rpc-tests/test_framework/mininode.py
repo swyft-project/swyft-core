@@ -1156,7 +1156,7 @@ class NodeConn(asyncore.dispatcher):
         b"mempool": msg_mempool,
     }
     MAGIC_BYTES = {
-        "mainnet": b"\xbf\x0c\x6b\xbd",   # mainnet
+        "mainnet": b"\xbf\x0c\x6c\xbd",   # mainnet
         "testnet3": b"\xce\xe2\xca\xff",  # testnet3
         "regtest": b"\xfc\xc1\xb7\xdc"    # regtest
     }
