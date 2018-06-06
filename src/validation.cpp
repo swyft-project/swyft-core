@@ -1254,12 +1254,12 @@ CAmount GetBlockSubsidy(int nPrevHeight, const Consensus::Params& consensusParam
 
     for (int i = consensusParams.nSubsidyHalvingInterval + consensusParams.nFirstBlocksEmpty; i <= nPrevHeight; i += consensusParams.nSubsidyHalvingInterval) {
         nSubsidy -= 5;
-        if(nSubsidy <= 5) {
+        if(nSubsidy <= 20) {
             break;
         }
     }
 
-    nSubsidy = std::max<CAmount>(nSubsidy, 5) * COIN;
+    nSubsidy = std::max<CAmount>(nSubsidy, 20) * COIN;
 
     CAmount nSuperblockPart = (nPrevHeight > consensusParams.nBudgetPaymentsStartBlock) ? nSubsidy / 10 : 0;
 
@@ -3276,7 +3276,7 @@ bool CheckBlock(const CBlock& block, CValidationState& state, bool fCheckPOW, bo
                              REJECT_INVALID, "bad-block-signature");
         }
 
-        if(!CheckProofOfStake(pwalletMain, block, hashProofOfStake)) {
+        if(!CheckProofOfStake(block, hashProofOfStake)) {
             state.DoS(100, error("CheckBlock(): check proof-of-stake failed for block %s\n", hash.ToString().c_str()));
             return false;
         }

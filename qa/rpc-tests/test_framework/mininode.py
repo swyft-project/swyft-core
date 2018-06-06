@@ -32,7 +32,7 @@ from threading import Thread
 import logging
 import copy
 
-import xsn_hash
+import dash_hash
 
 BIP0031_VERSION = 60000
 MY_VERSION = 70208  # current MIN_PEER_PROTO_VERSION
@@ -65,7 +65,7 @@ def hash256(s):
     return sha256(sha256(s))
 
 def xsnhash(s):
-    return xsn_hash.getPoWHash(s)
+    return dash_hash.getPoWHash(s)
 
 def deser_string(f):
     nit = struct.unpack("<B", f.read(1))[0]
@@ -1156,7 +1156,7 @@ class NodeConn(asyncore.dispatcher):
         b"mempool": msg_mempool,
     }
     MAGIC_BYTES = {
-        "mainnet": b"\xbf\x0c\x6b\xbd",   # mainnet
+        "mainnet": b"\xbf\x0c\x6c\xbd",   # mainnet
         "testnet3": b"\xce\xe2\xca\xff",  # testnet3
         "regtest": b"\xfc\xc1\xb7\xdc"    # regtest
     }
