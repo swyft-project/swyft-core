@@ -1,4 +1,5 @@
 // Copyright (c) 2014-2017 The Bitcoin Core developers
+// Copyright (c) 2019 The Swyft Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -10,8 +11,8 @@
 #include <vector>
 
 /**
- * CBaseChainParams defines the base parameters (shared between xsn-cli and xsnd)
- * of a given instance of the XSN system.
+ * CBaseChainParams defines the base parameters (shared between swyft-cli and swyftd)
+ * of a given instance of the Swyft system.
  */
 class CBaseChainParams
 {

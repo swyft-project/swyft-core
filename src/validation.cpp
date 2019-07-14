@@ -1,5 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2017 The Bitcoin Core developers
+// Copyright (c) 2019 The Swyft Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -53,7 +54,7 @@
 #include <boost/thread.hpp>
 
 #if defined(NDEBUG)
-# error "XSN cannot be compiled without assertions."
+# error "Swyft cannot be compiled without assertions."
 #endif
 
 #define MICRO 0.000001
@@ -1147,25 +1148,21 @@ bool ReadBlockFromDisk(CBlock& block, const CBlockIndex* pindex, const Consensus
 
 CAmount GetBlockSubsidy(int nPrevHeight, const Consensus::Params& consensusParams, bool fSuperblockPartOnly)
 {
-    if(nPrevHeight == 1) {
-        return 76500000 * COIN;
+    // premine
+    if(nPrevHeight == 0) {
+        return 2000000 * COIN;
     }
 
-    if(nPrevHeight < consensusParams.nFirstBlocksEmpty)
-        return 0;
+    CAmount nSubsidy = 7.66 * COIN;
 
-    CAmount nSubsidy = 50;
-
-    for (int i = consensusParams.nSubsidyHalvingInterval + consensusParams.nFirstBlocksEmpty; i <= nPrevHeight; i += consensusParams.nSubsidyHalvingInterval) {
-        nSubsidy -= 5;
-        if(nSubsidy <= 20) {
-            break;
-        }
+    // 40% reduction yearly
+    int n = nPrevHeight / consensusParams.nSubsidyHalvingInterval;
+    for (int i=0; i < n; ++i) {
+        nSubsidy = nSubsidy * 6 / 10;
     }
 
-    nSubsidy = std::max<CAmount>(nSubsidy, 20) * COIN;
-
-    CAmount nSuperblockPart = (nPrevHeight > consensusParams.nBudgetPaymentsStartBlock) ? nSubsidy / 10 : 0;
+    // 35% treasury
+    CAmount nSuperblockPart = (nPrevHeight > consensusParams.nSuperblockStartBlock) ? nSubsidy * 35 / 100 : 0;
 
     return fSuperblockPartOnly ? nSuperblockPart : nSubsidy - nSuperblockPart;
 }
@@ -1174,8 +1171,13 @@ CAmount GetMasternodePayment(int nHeight, CAmount blockValue)
 {
     (void)nHeight;
 
-    // half of the block for now
-    return blockValue / 2;
+    // 64.2% of the block, 45% of subsidy
+    return blockValue * 0.642;
+}
+
+bool IsMasternodeCollateral(CAmount value)
+{
+    return value == MASTERNODE_COLLATERAL;
 }
 
 bool IsInitialBlockDownload()
@@ -1711,7 +1713,7 @@ static bool WriteUndoDataForBlock(const CBlockUndo& blockundo, CValidationState&
 static CCheckQueue<CScriptCheck> scriptcheckqueue(128);
 
 void ThreadScriptCheck() {
-    RenameThread("xsn-scriptch");
+    RenameThread("swyft-scriptch");
     scriptcheckqueue.Thread();
 }
 
@@ -2101,7 +2103,7 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
     int64_t nTime3 = GetTimeMicros(); nTimeConnect += nTime3 - nTime2;
     LogPrint(BCLog::BENCH, "      - Connect %u transactions: %.2fms (%.3fms/tx, %.3fms/txin) [%.2fs (%.2fms/blk)]\n", (unsigned)block.vtx.size(), MILLI * (nTime3 - nTime2), MILLI * (nTime3 - nTime2) / block.vtx.size(), nInputs <= 1 ? 0 : MILLI * (nTime3 - nTime2) / (nInputs-1), nTimeConnect * MICRO, nTimeConnect * MILLI / nBlocksTotal);
 
-    // XSN : MODIFIED TO CHECK MASTERNODE PAYMENTS AND SUPERBLOCKS
+    // Swyft : MODIFIED TO CHECK MASTERNODE PAYMENTS AND SUPERBLOCKS
 
     // It's possible that we simply don't have enough data and this could fail
     // (i.e. block itself could be a correct one and we need to store it),
@@ -2114,7 +2116,7 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
 
     std::string strError = "";
     if (!IsBlockValueValid(block, pindex->nHeight, expectedReward, pindex->nMint, strError)) {
-        return state.DoS(0, error("ConnectBlock(XSN): %s", strError), REJECT_INVALID, "bad-cb-amount");
+        return state.DoS(0, error("ConnectBlock(Swyft): %s", strError), REJECT_INVALID, "bad-cb-amount");
     }
 
     const auto& coinbaseTransaction = (pindex->nHeight > Params().GetConsensus().nLastPoWBlock ? block.vtx[1] : block.vtx[0]);
@@ -2125,11 +2127,11 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
 
     if (!IsBlockPayeeValid(coinbaseTransaction, pindex->nHeight, expectedReward, pindex->nMint)) {
         //        mapRejectedBlocks.insert(std::make_pair(block.GetHash(), GetTime()));
-        return state.DoS(0, error("ConnectBlock(XSN): couldn't find masternode or superblock payments"),
+        return state.DoS(0, error("ConnectBlock(Swyft): couldn't find masternode or superblock payments"),
                          REJECT_INVALID, "bad-cb-payee");
     }
 
-    // END XSN
+    // END Swyft
 
     if (!control.Wait())
         return state.DoS(100, error("%s: CheckQueue failed", __func__), REJECT_INVALID, "block-validation-failed");

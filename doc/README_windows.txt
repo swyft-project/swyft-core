@@ -1,9 +1,9 @@
-XSN Core
+Swyft Core
 =============
 
 Intro
 -----
-XSN is a free open source peer-to-peer electronic cash system that is
+Swyft is a free open source peer-to-peer electronic cash system that is
 completely decentralized, without the need for a central server or trusted
 parties.  Users hold the crypto keys to their own money and transact directly
 with each other, with the help of a P2P network to check for double-spending.
@@ -11,13 +11,13 @@ with each other, with the help of a P2P network to check for double-spending.
 
 Setup
 -----
-Unpack the files into a directory and run xsn-qt.exe.
+Unpack the files into a directory and run swyft-qt.exe.
 
-XSN Core is the original XSN client and it builds the backbone of the network.
-However, it downloads and stores the entire history of XSN transactions;
+Swyft Core is the original Swyft client and it builds the backbone of the network.
+However, it downloads and stores the entire history of Swyft transactions;
 depending on the speed of your computer and network connection, the synchronization
 process can take anywhere from a few hours to a day or more.
 
-See the xsn wiki at:
-  https://en.xsn.it/wiki/Main_Page
+See the swyft wiki at:
+  https://en.swyft.it/wiki/Main_Page
 for more help and information.

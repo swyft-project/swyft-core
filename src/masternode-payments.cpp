@@ -1,4 +1,5 @@
 // Copyright (c) 2014-2017 The Dash Core developers
+// Copyright (c) 2019 The Swyft Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -41,7 +42,7 @@ static bool GetBlockHash(uint256 &hash, int nBlockHeight)
 *   Determine if coinbase outgoing created money is the correct value
 *
 *   Why is this needed?
-*   - In Xsn some blocks are superblocks, which output much higher amounts of coins
+*   - In Swyft some blocks are superblocks, which output much higher amounts of coins
 *   - Otherblocks are 10% lower in outgoing value, so in total, no extra coins are created
 *   - When non-superblocks are detected, the normal schedule should be maintained
 */
@@ -317,7 +318,7 @@ int CMasternodePayments::GetMinMasternodePaymentsProto() {
 
 void CMasternodePayments::ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStream& vRecv, CConnman& connman)
 {
-    if(fLiteMode) return; // disable all Xsn specific functionality
+    if(fLiteMode) return; // disable all Swyft specific functionality
 
     if (strCommand == NetMsgType::MASTERNODEPAYMENTSYNC) { //Masternode Payments Request Sync
 
@@ -593,7 +594,7 @@ bool CMasternodeBlockPayees::IsTransactionValid(const CTransactionRef& txNew) co
         }
     }
 
-    LogPrintf("CMasternodeBlockPayees::IsTransactionValid -- ERROR: Missing required payment, possible payees: '%s', amount: %f XSN\n", strPayeesPossible, (float)nMasternodePayment/COIN);
+    LogPrintf("CMasternodeBlockPayees::IsTransactionValid -- ERROR: Missing required payment, possible payees: '%s', amount: %f Swyft\n", strPayeesPossible, (float)nMasternodePayment/COIN);
     return false;
 }
 
@@ -1033,7 +1034,7 @@ void CMasternodePayments::UpdatedBlockTip(const CBlockIndex *pindex, CConnman& c
     ProcessBlock(nFutureBlock, connman);
 }
 
-void AdjustMasternodePayment(CMutableTransaction &tx, const CTxOut &txoutMasternodePayment, const TPoSContract &tposContract)
+void AdjustMasternodePayment(CMutableTransaction &tx, CAmount blockReward, const CTxOut &txoutMasternodePayment, const TPoSContract &tposContract)
 {
     auto it = std::find(std::begin(tx.vout), std::end(tx.vout), txoutMasternodePayment);
 
@@ -1045,9 +1046,16 @@ void AdjustMasternodePayment(CMutableTransaction &tx, const CTxOut &txoutMastern
         int i = tx.vout.size() - 2;
         if(tposContract.IsValid()) // here we have 3 outputs, first as stake reward, second as tpos reward, third as MN reward
         {
-            masternodePayment /= 100; // to calculate percentage
-            tx.vout[i - 1].nValue -= masternodePayment * tposContract.stakePercentage; // adjust reward for owner.
-            tx.vout[i].nValue -= masternodePayment * (100 - tposContract.stakePercentage); // adjust reward for merchant
+            // Note: Recalculating the merchant reward via the blockReward effectively floors the value (max error < 1 sat).
+            // If calculated via the floored masternodePayment fraction (simply subtracting a fraction), the effective merchant
+            // reward might exceed the actual value (max error < 1 sat). If both the merchant and owner reward are calculated
+            // via the masternodePayment fraction, it is possible to end up with an accumulated error > 1 sat. In that case
+            // the block validation check can fail as rewards exceeds the expected block reward. By using both calculation
+            // methods the errors are compensated.
+            // Also consider that the staking output contains the input value plus the owner reward and might very
+            // well be split into multiple staking outputs (can't simply be replaced by owner reward).
+            tx.vout[i - 1].nValue -= masternodePayment * tposContract.stakePercentage / 100; // adjust reward for owner.
+            tx.vout[i].nValue = (blockReward - masternodePayment) * (100 - tposContract.stakePercentage) / 100; // adjust reward for merchant
         }
         else // here we have 2 outputs, first as stake reward, second as MN reward
         {

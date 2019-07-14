@@ -1,4 +1,5 @@
 // Copyright (c) 2014-2017 The Dash Core developers
+// Copyright (c) 2019 The Swyft Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -8,6 +9,7 @@
 #include <net_processing.h>
 #include <spork.h>
 #include <netmessagemaker.h>
+#include <key_io.h>
 
 #include <boost/lexical_cast.hpp>
 
@@ -19,9 +21,9 @@ CSporkManager sporkManager;
 std::map<uint256, CSporkMessage> mapSporks;
 
 namespace Spork {
-static const int64_t SPORK_2_INSTANTSEND_ENABLED_DEFAULT                = 0;            // ON
+static const int64_t SPORK_2_INSTANTSEND_ENABLED_DEFAULT                = 4070908800ULL;// OFF
 static const int64_t SPORK_3_INSTANTSEND_BLOCK_FILTERING_DEFAULT        = 0;            // ON
-static const int64_t SPORK_5_INSTANTSEND_MAX_VALUE_DEFAULT              = 1000;         // 1000 XSN
+static const int64_t SPORK_5_INSTANTSEND_MAX_VALUE_DEFAULT              = 1000;         // 1000 SWYFT
 static const int64_t SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT_DEFAULT     = 4070908800ULL;// OFF
 static const int64_t SPORK_9_SUPERBLOCKS_ENABLED_DEFAULT                = 0;            // ON
 static const int64_t SPORK_10_MASTERNODE_PAY_UPDATED_NODES_DEFAULT      = 4070908800ULL;// OFF
@@ -273,9 +275,15 @@ bool CSporkMessage::CheckSignature()
     //note: need to investigate why this is failing
     std::string strError = "";
     std::string strMessage = boost::lexical_cast<std::string>(nSporkID) + boost::lexical_cast<std::string>(nValue) + boost::lexical_cast<std::string>(nTimeSigned);
-    CPubKey pubkey(ParseHex(Params().SporkPubKey()));
 
-    if(!CMessageSigner::VerifyMessage(pubkey.GetID(), vchSig, strMessage, strError)) {
+    CKeyID keyID;
+    CBitcoinAddress address(Params().SporkAddress());
+    if (!address.GetKeyID(keyID)) {
+        LogPrintf("%s -- Failed to decode spork address\n", __func__);
+        return false;
+    }
+
+    if(!CMessageSigner::VerifyMessage(keyID, vchSig, strMessage, strError)) {
         LogPrintf("%s failed, error: %s\n", __func__, strError);
         return false;
     }

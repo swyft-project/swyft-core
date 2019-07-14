@@ -1,11 +1,12 @@
 // Copyright (c) 2014-2017 The Dash Core developers
+// Copyright (c) 2019 The Swyft Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef GOVERNANCE_OBJECT_H
 #define GOVERNANCE_OBJECT_H
 
-//#define ENABLE_XSN_DEBUG
+//#define ENABLE_SWYFT_DEBUG
 
 #include <cachemultimap.h>
 #include <governance/governance-exceptions.h>

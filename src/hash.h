@@ -1,5 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2017 The Bitcoin Core developers
+// Copyright (c) 2019 The Swyft Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -69,8 +70,8 @@ GLOBAL sph_echo512_context      z_echo;
 #define ZKECCAK (memcpy(&ctx_keccak, &z_keccak, sizeof(z_keccak)))
 #define ZSKEIN (memcpy(&ctx_skein, &z_skein, sizeof(z_skein)))
 
-/* ----------- XSN Hash ------------------------------------------------- */
-/** A hasher class for XSN's 256-bit hash (double SHA-256). */
+/* ----------- Swyft Hash ------------------------------------------------- */
+/** A hasher class for Swyft's 256-bit hash (double SHA-256). */
 class CHash256 {
 private:
     CSHA256 sha;
@@ -94,7 +95,7 @@ public:
     }
 };
 
-/** A hasher class for XSN's 160-bit hash (SHA-256 + RIPEMD-160). */
+/** A hasher class for Swyft's 160-bit hash (SHA-256 + RIPEMD-160). */
 class CHash160 {
 private:
     CSHA256 sha;
@@ -350,7 +351,7 @@ public:
 uint64_t SipHashUint256(uint64_t k0, uint64_t k1, const uint256& val);
 uint64_t SipHashUint256Extra(uint64_t k0, uint64_t k1, const uint256& val, uint32_t extra);
 
-/* ----------- XSN Hash ------------------------------------------------ */
+/* ----------- Swyft Hash ------------------------------------------------ */
 template<typename T1>
 inline uint256 HashX11(const T1 pbegin, const T1 pend)
 

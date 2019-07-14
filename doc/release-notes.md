@@ -1,28 +1,28 @@
 (note: this is a temporary file, to be added-to by anybody, and moved to
 release-notes at release time)
 
-XSN Core version *version* is now available from:
+Swyft Core version *version* is now available from:
 
-  <https://xsncore.org/bin/xsn-core-*version*/>
+  <https://swyft.network/bin/bitcoin-core-*version*/>
 
 This is a new major version release, including new features, various bugfixes
 and performance improvements, as well as updated translations.
 
 Please report bugs using the issue tracker at GitHub:
 
-  <https://github.com/xsn/xsn/issues>
+  <https://github.com/swyft-project/swyft-core/issues>
 
 To receive security and update notifications, please subscribe to:
 
-  <https://xsncore.org/en/list/announcements/join/>
+  <https://swyft.network/en/list/announcements/join/>
 
 How to Upgrade
 ==============
 
 If you are running an older version, shut it down. Wait until it has completely
 shut down (which might take a few minutes for older versions), then run the
-installer (on Windows) or just copy over `/Applications/XSN-Qt` (on Mac)
-or `xsnd`/`xsn-qt` (on Linux).
+installer (on Windows) or just copy over `/Applications/Swyft-Qt` (on Mac)
+or `swyftd`/`swyft-qt` (on Linux).
 
 The first time you run version 0.15.0, your chainstate database will be converted to a
 new format, which will take anywhere from a few minutes to half an hour,
@@ -47,10 +47,10 @@ processing the entire blockchain.
 Compatibility
 ==============
 
-XSN Core is extensively tested on multiple operating systems using
+Swyft Core is extensively tested on multiple operating systems using
 the Linux kernel, macOS 10.8+, and Windows 7 and newer (Windows XP is not supported).
 
-XSN Core should also work on most other Unix-like systems but is not
+Swyft Core should also work on most other Unix-like systems but is not
 frequently tested on them.
 
 Notable changes
@@ -95,9 +95,9 @@ same as before.
 Low-level RPC changes
 ---------------------
 
-- When xsn is not started with any `-wallet=<path>` options, the name of
+- When swyft is not started with any `-wallet=<path>` options, the name of
   the default wallet returned by `getwalletinfo` and `listwallets` RPCs is
-  now the empty string `""` instead of `"wallet.dat"`. If xsn is started
+  now the empty string `""` instead of `"wallet.dat"`. If swyft is started
   with any `-wallet=<path>` options, there is no change in behavior, and the
   name of any wallet is just its `<path>` string.
 
@@ -124,4 +124,4 @@ Credits
 Thanks to everyone who directly contributed to this release:
 
 
-As well as everyone that helped translating on [Transifex](https://www.transifex.com/projects/p/xsn/).
+As well as everyone that helped translating on [Transifex](https://www.transifex.com/projects/p/swyft/).

@@ -1,11 +1,11 @@
 Sample configuration files for:
 ```
-SystemD: xsnd.service
-Upstart: xsnd.conf
-OpenRC:  xsnd.openrc
-         xsnd.openrcconf
-CentOS:  xsnd.init
-OS X:    org.xsn.xsnd.plist
+SystemD: swyftd.service
+Upstart: swyftd.conf
+OpenRC:  swyftd.openrc
+         swyftd.openrcconf
+CentOS:  swyftd.init
+OS X:    org.swyft.swyftd.plist
 ```
 have been made available to assist packagers in creating node packages here.
 

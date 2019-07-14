@@ -20,15 +20,15 @@ EXCLUDE = [
     'src/secp256k1/include/secp256k1_ecdh.h',
     'src/secp256k1/include/secp256k1_recovery.h',
     'src/secp256k1/include/secp256k1_schnorr.h',
-    'src/secp256k1/src/java/org_xsn_NativeSecp256k1.c',
-    'src/secp256k1/src/java/org_xsn_NativeSecp256k1.h',
-    'src/secp256k1/src/java/org_xsn_Secp256k1Context.c',
-    'src/secp256k1/src/java/org_xsn_Secp256k1Context.h',
+    'src/secp256k1/src/java/org_swyft_NativeSecp256k1.c',
+    'src/secp256k1/src/java/org_swyft_NativeSecp256k1.h',
+    'src/secp256k1/src/java/org_swyft_Secp256k1Context.c',
+    'src/secp256k1/src/java/org_swyft_Secp256k1Context.h',
     # univalue:
     'src/univalue/test/object.cpp',
     'src/univalue/lib/univalue_escapes.h',
     # auto generated:
-    'src/qt/xsnstrings.cpp',
+    'src/qt/swyftstrings.cpp',
     'src/chainparamsseeds.h',
     # other external copyrights:
     'src/tinyformat.h',
@@ -87,9 +87,9 @@ EXPECTED_HOLDER_NAMES = [
     "Satoshi Nakamoto\n",
     "The Bitcoin Core developers\n",
     "The Bitcoin Core developers \n",
-    "XSN Core Developers\n",
+    "XSN Core developers\n",
     "the XSN Core developers\n",
-    "The XSN developers\n",
+    "The XSN Core developers\n",
     "The LevelDB Authors\. All rights reserved\.\n",
     "BitPay Inc\.\n",
     "BitPay, Inc\.\n",
@@ -279,7 +279,7 @@ Usage:
     $ ./copyright_header.py report <base_directory> [verbose]
 
 Arguments:
-    <base_directory> - The base directory of a xsn source code repository.
+    <base_directory> - The base directory of a swyft source code repository.
     [verbose] - Includes a list of every file of each subcategory in the report.
 """
 
@@ -435,7 +435,7 @@ Usage:
     $ ./copyright_header.py update <base_directory>
 
 Arguments:
-    <base_directory> - The base directory of a xsn source code repository.
+    <base_directory> - The base directory of a swyft source code repository.
 """
 
 def print_file_action_message(filename, action):
@@ -557,7 +557,7 @@ Usage:
     $ ./copyright_header.py insert <file>
 
 Arguments:
-    <file> - A source file in the xsn repository.
+    <file> - A source file in the swyft repository.
 """
 
 def insert_cmd(argv):
@@ -582,7 +582,7 @@ def insert_cmd(argv):
 ################################################################################
 
 USAGE = """
-copyright_header.py - utilities for managing copyright headers of 'The XSN
+copyright_header.py - utilities for managing copyright headers of 'The Swyft
 Core developers' in repository source files.
 
 Usage:

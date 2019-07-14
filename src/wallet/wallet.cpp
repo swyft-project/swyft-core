@@ -1,5 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2017 The Bitcoin Core developers
+// Copyright (c) 2019 The Swyft Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -397,7 +398,8 @@ bool CWallet::AddWatchOnly(const CScript& dest)
 
 CAmount GetStakeReward(CAmount blockReward, unsigned int percentage)
 {
-    return (blockReward / 100) * percentage;
+    // Note: multiply first to avoid rounding errors!
+    return blockReward * percentage / 100;
 }
 
 bool CWallet::CreateCoinStakeKernel(CScript &kernelScript, const CScript &stakeScript,
@@ -2635,7 +2637,7 @@ static bool IsCorrectType(CAmount nAmount, AvailableCoinsType nCoinType)
             found = !CPrivateSend::IsDenominatedAmount(nAmount);
 #endif
     } else if(nCoinType == ONLY_MASTERNODE_COLLATERAL) {
-        found = nAmount == 15000 * COIN;
+        found = IsMasternodeCollateral(nAmount);
     } else if(nCoinType == ONLY_MERCHANTNODE_COLLATERAL) {
         found = nAmount == 1 * COIN;
     } else if(nCoinType == ONLY_PRIVATESEND_COLLATERAL) {
@@ -2775,8 +2777,8 @@ std::map<CTxDestination, std::vector<COutput>> CWallet::ListCoins() const
     // CWalletTx objects, callers to this function really should acquire the
     // cs_wallet lock before calling it. However, the current caller doesn't
     // acquire this lock yet. There was an attempt to add the missing lock in
-    // https://github.com/xsn/xsn/pull/10340, but that change has been
-    // postponed until after https://github.com/xsn/xsn/pull/10244 to
+    // https://github.com/swyft-project/swyft-core/pull/10340, but that change has been
+    // postponed until after https://github.com/swyft-project/swyft-core/pull/10244 to
     // avoid adding some extra complexity to the Qt code.
 
     std::map<CTxDestination, std::vector<COutput>> result;
@@ -3061,7 +3063,7 @@ bool CWallet::SelectCoinsGrouppedByAddresses(std::vector<CompactTallyItem>& vecT
             if(fAnonymizable) {
                 // ignore collaterals
                 if(CPrivateSend::IsCollateralAmount(wtx.tx->vout[i].nValue)) continue;
-                if(fMasterNode && wtx.tx->vout[i].nValue == 15000 * COIN) continue;
+                if(fMasterNode && IsMasternodeCollateral(wtx.tx->vout[i].nValue)) continue;
                 // ignore outputs that are 10 times smaller then the smallest denomination
                 // otherwise they will just lead to higher fee / lower priority
                 if(wtx.tx->vout[i].nValue <= nSmallestDenom/10) continue;
@@ -3376,7 +3378,7 @@ bool CWallet::CreateTransaction(const std::vector<CRecipient>& vecSend, CTransac
 
             // Create change script that will be used if we need change
             // TODO: pass in scriptChange instead of reservekey so
-            // change transaction isn't always pay-to-xsn-address
+            // change transaction isn't always pay-to-swyft-address
             CScript scriptChange;
 
             // coin control: send change to custom address
@@ -3816,7 +3818,7 @@ bool CWallet::CreateCoinStake(unsigned int nBits,
     std::vector<CTxOut> voutSuperblock;
     int nHeight = chainActive.Tip()->nHeight + 1;
     FillBlockPayments(txNew, nHeight, blockReward, txoutMasternode, voutSuperblock);
-    AdjustMasternodePayment(txNew, txoutMasternode, tposContract);
+    AdjustMasternodePayment(txNew, blockReward, txoutMasternode, tposContract);
     LogPrintf("CreateCoinStake -- nBlockHeight %d blockReward %lld txoutMasternode %s txNew %s",
               nHeight, blockReward, txoutMasternode.ToString(), txNew.ToString());
 
@@ -4660,8 +4662,8 @@ void CWallet::GetKeyBirthTimes(std::map<CTxDestination, int64_t> &mapKeyBirth) c
  *   the block time.
  *
  * For more information see CWalletTx::nTimeSmart,
- * https://xsntalk.org/?topic=54527, or
- * https://github.com/xsn/xsn/pull/1393.
+ * https://swyfttalk.org/?topic=54527, or
+ * https://github.com/swyft-project/swyft-core/pull/1393.
  */
 unsigned int CWallet::ComputeTimeSmart(const CWalletTx& wtx) const
 {
@@ -5300,7 +5302,10 @@ bool CWallet::GetMasternodeOutpointAndKeys(COutPoint& outpointRet, CPubKey& pubK
     std::vector<COutput> vPossibleCoins;
     CCoinControl coinControl;
     coinControl.nCoinType = ONLY_MASTERNODE_COLLATERAL;
-    AvailableCoins(vPossibleCoins, true, &coinControl, 1, MAX_MONEY, MAX_MONEY, 0, 0, 9999999);
+    {
+        LOCK2(cs_main, cs_wallet);
+        AvailableCoins(vPossibleCoins, true, &coinControl, 1, MAX_MONEY, MAX_MONEY, 0, 0, 9999999);
+    }
     if(vPossibleCoins.empty()) {
         LogPrintf("CWallet::GetMasternodeOutpointAndKeys -- Could not locate any valid masternode vin\n");
         return false;

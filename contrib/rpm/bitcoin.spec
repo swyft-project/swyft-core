@@ -13,31 +13,31 @@
 %endif
 %endif
 
-Name:		xsn
+Name:		swyft
 Version:	0.12.0
 Release:	2%{?dist}
 Summary:	Peer to Peer Cryptographic Currency
 
 Group:		Applications/System
 License:	MIT
-URL:		https://xsn.org/
-Source0:	https://xsn.org/bin/xsn-core-%{version}/xsn-%{version}.tar.gz
+URL:		https://swyft.network/
+Source0:	https://swyft.network/bin/bitcoin-core-%{version}/swyft-%{version}.tar.gz
 Source1:	http://download.oracle.com/berkeley-db/db-%{bdbv}.NC.tar.gz
 
-Source10:	https://raw.githubusercontent.com/xsn/xsn/v%{version}/contrib/debian/examples/xsn.conf
+Source10:	https://raw.githubusercontent.com/swyft/swyft/v%{version}/contrib/debian/examples/swyft.conf
 
 #man pages
-Source20:	https://raw.githubusercontent.com/xsn/xsn/v%{version}/doc/man/xsnd.1
-Source21:	https://raw.githubusercontent.com/xsn/xsn/v%{version}/doc/man/xsn-cli.1
-Source22:	https://raw.githubusercontent.com/xsn/xsn/v%{version}/doc/man/xsn-qt.1
+Source20:	https://raw.githubusercontent.com/swyft/swyft/v%{version}/doc/man/swyftd.1
+Source21:	https://raw.githubusercontent.com/swyft/swyft/v%{version}/doc/man/swyft-cli.1
+Source22:	https://raw.githubusercontent.com/swyft/swyft/v%{version}/doc/man/swyft-qt.1
 
 #selinux
-Source30:	https://raw.githubusercontent.com/xsn/xsn/v%{version}/contrib/rpm/xsn.te
-# Source31 - what about xsn-tx and bench_xsn ???
-Source31:	https://raw.githubusercontent.com/xsn/xsn/v%{version}/contrib/rpm/xsn.fc
-Source32:	https://raw.githubusercontent.com/xsn/xsn/v%{version}/contrib/rpm/xsn.if
+Source30:	https://raw.githubusercontent.com/swyft/swyft/v%{version}/contrib/rpm/swyft.te
+# Source31 - what about swyft-tx and bench_swyft ???
+Source31:	https://raw.githubusercontent.com/swyft/swyft/v%{version}/contrib/rpm/swyft.fc
+Source32:	https://raw.githubusercontent.com/swyft/swyft/v%{version}/contrib/rpm/swyft.if
 
-Source100:	https://upload.wikimedia.org/wikipedia/commons/4/46/XSN.svg
+Source100:	https://upload.wikimedia.org/wikipedia/commons/4/46/Swyft.svg
 
 %if 0%{?_use_libressl:1}
 BuildRequires:	libressl-devel
@@ -50,13 +50,13 @@ BuildRequires:	autoconf automake libtool
 BuildRequires:	libevent-devel
 
 
-Patch0:		xsn-0.12.0-libressl.patch
+Patch0:		swyft-0.12.0-libressl.patch
 
 
 %description
-XSN is a digital cryptographic currency that uses peer-to-peer technology to
+Swyft is a digital cryptographic currency that uses peer-to-peer technology to
 operate with no central authority or banks; managing transactions and the
-issuing of xsns is carried out collectively by the network.
+issuing of swyfts is carried out collectively by the network.
 
 %if %{_buildqt}
 %package core
@@ -79,42 +79,42 @@ BuildRequires:	%{_bindir}/inkscape
 BuildRequires:	%{_bindir}/convert
 
 %description core
-XSN is a digital cryptographic currency that uses peer-to-peer technology to
+Swyft is a digital cryptographic currency that uses peer-to-peer technology to
 operate with no central authority or banks; managing transactions and the
-issuing of xsns is carried out collectively by the network.
+issuing of swyfts is carried out collectively by the network.
 
 This package contains the Qt based graphical client and node. If you are looking
-to run a XSN wallet, this is probably the package you want.
+to run a Swyft wallet, this is probably the package you want.
 %endif
 
 
 %package libs
-Summary:	XSN shared libraries
+Summary:	Swyft shared libraries
 Group:		System Environment/Libraries
 
 %description libs
-This package provides the xsnconsensus shared libraries. These libraries
+This package provides the swyftconsensus shared libraries. These libraries
 may be used by third party software to provide consensus verification
 functionality.
 
 Unless you know need this package, you probably do not.
 
 %package devel
-Summary:	Development files for xsn
+Summary:	Development files for swyft
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 
 %description devel
 This package contains the header files and static library for the
-xsnconsensus shared library. If you are developing or compiling software
+swyftconsensus shared library. If you are developing or compiling software
 that wants to link against that library, then you need this package installed.
 
 Most people do not need this package installed.
 
 %package server
-Summary:	The xsn daemon
+Summary:	The swyft daemon
 Group:		System Environment/Daemons
-Requires:	xsn-utils = %{version}-%{release}
+Requires:	swyft-utils = %{version}-%{release}
 Requires:	selinux-policy policycoreutils-python
 Requires(pre):	shadow-utils
 Requires(post):	%{_sbindir}/semodule %{_sbindir}/restorecon %{_sbindir}/fixfiles %{_sbindir}/sestatus
@@ -124,34 +124,34 @@ BuildRequires:	checkpolicy
 BuildRequires:	%{_datadir}/selinux/devel/Makefile
 
 %description server
-This package provides a stand-alone xsn-core daemon. For most users, this
+This package provides a stand-alone bitcoin-core daemon. For most users, this
 package is only needed if they need a full-node without the graphical client.
 
 Some third party wallet software will want this package to provide the actual
-xsn-core node they use to connect to the network.
+bitcoin-core node they use to connect to the network.
 
-If you use the graphical xsn-core client then you almost certainly do not
+If you use the graphical bitcoin-core client then you almost certainly do not
 need this package.
 
 %package utils
-Summary:	XSN utilities
+Summary:	Swyft utilities
 Group:		Applications/System
 
 %description utils
 This package provides several command line utilities for interacting with a
-xsn-core daemon.
+bitcoin-core daemon.
 
-The xsn-cli utility allows you to communicate and control a xsn daemon
-over RPC, the xsn-tx utility allows you to create a custom transaction, and
-the bench_xsn utility can be used to perform some benchmarks.
+The swyft-cli utility allows you to communicate and control a swyft daemon
+over RPC, the swyft-tx utility allows you to create a custom transaction, and
+the bench_swyft utility can be used to perform some benchmarks.
 
-This package contains utilities needed by the xsn-server package.
+This package contains utilities needed by the swyft-server package.
 
 
 %prep
 %setup -q
 %patch0 -p1 -b .libressl
-cp -p %{SOURCE10} ./xsn.conf.example
+cp -p %{SOURCE10} ./swyft.conf.example
 tar -zxf %{SOURCE1}
 cp -p db-%{bdbv}.NC/LICENSE ./db-%{bdbv}.NC-LICENSE
 mkdir db4 SELinux
@@ -172,7 +172,7 @@ make %{?_smp_mflags}
 pushd SELinux
 for selinuxvariant in %{selinux_variants}; do
 	make NAME=${selinuxvariant} -f %{_datadir}/selinux/devel/Makefile
-	mv xsn.pp xsn.pp.${selinuxvariant}
+	mv swyft.pp swyft.pp.${selinuxvariant}
 	make NAME=${selinuxvariant} -f %{_datadir}/selinux/devel/Makefile clean
 done
 popd
@@ -182,42 +182,42 @@ popd
 make install DESTDIR=%{buildroot}
 
 mkdir -p -m755 %{buildroot}%{_sbindir}
-mv %{buildroot}%{_bindir}/xsnd %{buildroot}%{_sbindir}/xsnd
+mv %{buildroot}%{_bindir}/swyftd %{buildroot}%{_sbindir}/swyftd
 
 # systemd stuff
 mkdir -p %{buildroot}%{_tmpfilesdir}
-cat <<EOF > %{buildroot}%{_tmpfilesdir}/xsn.conf
-d /run/xsnd 0750 xsn xsn -
+cat <<EOF > %{buildroot}%{_tmpfilesdir}/swyft.conf
+d /run/swyftd 0750 swyft swyft -
 EOF
-touch -a -m -t 201504280000 %{buildroot}%{_tmpfilesdir}/xsn.conf
+touch -a -m -t 201504280000 %{buildroot}%{_tmpfilesdir}/swyft.conf
 
 mkdir -p %{buildroot}%{_sysconfdir}/sysconfig
-cat <<EOF > %{buildroot}%{_sysconfdir}/sysconfig/xsn
-# Provide options to the xsn daemon here, for example
+cat <<EOF > %{buildroot}%{_sysconfdir}/sysconfig/swyft
+# Provide options to the swyft daemon here, for example
 # OPTIONS="-testnet -disable-wallet"
 
 OPTIONS=""
 
 # System service defaults.
 # Don't change these unless you know what you're doing.
-CONFIG_FILE="%{_sysconfdir}/xsn/xsn.conf"
-DATA_DIR="%{_localstatedir}/lib/xsn"
-PID_FILE="/run/xsnd/xsnd.pid"
+CONFIG_FILE="%{_sysconfdir}/swyft/swyft.conf"
+DATA_DIR="%{_localstatedir}/lib/swyft"
+PID_FILE="/run/swyftd/swyftd.pid"
 EOF
-touch -a -m -t 201504280000 %{buildroot}%{_sysconfdir}/sysconfig/xsn
+touch -a -m -t 201504280000 %{buildroot}%{_sysconfdir}/sysconfig/swyft
 
 mkdir -p %{buildroot}%{_unitdir}
-cat <<EOF > %{buildroot}%{_unitdir}/xsn.service
+cat <<EOF > %{buildroot}%{_unitdir}/swyft.service
 [Unit]
-Description=XSN daemon
+Description=Swyft daemon
 After=syslog.target network.target
 
 [Service]
 Type=forking
-ExecStart=%{_sbindir}/xsnd -daemon -conf=\${CONFIG_FILE} -datadir=\${DATA_DIR} -pid=\${PID_FILE} \$OPTIONS
-EnvironmentFile=%{_sysconfdir}/sysconfig/xsn
-User=xsn
-Group=xsn
+ExecStart=%{_sbindir}/swyftd -daemon -conf=\${CONFIG_FILE} -datadir=\${DATA_DIR} -pid=\${PID_FILE} \$OPTIONS
+EnvironmentFile=%{_sysconfdir}/sysconfig/swyft
+User=swyft
+Group=swyft
 
 Restart=on-failure
 PrivateTmp=true
@@ -229,63 +229,63 @@ StartLimitBurst=5
 [Install]
 WantedBy=multi-user.target
 EOF
-touch -a -m -t 201504280000 %{buildroot}%{_unitdir}/xsn.service
+touch -a -m -t 201504280000 %{buildroot}%{_unitdir}/swyft.service
 #end systemd stuff
 
-mkdir %{buildroot}%{_sysconfdir}/xsn
-mkdir -p %{buildroot}%{_localstatedir}/lib/xsn
+mkdir %{buildroot}%{_sysconfdir}/swyft
+mkdir -p %{buildroot}%{_localstatedir}/lib/swyft
 
 #SELinux
 for selinuxvariant in %{selinux_variants}; do
 	install -d %{buildroot}%{_datadir}/selinux/${selinuxvariant}
-	install -p -m 644 SELinux/xsn.pp.${selinuxvariant} %{buildroot}%{_datadir}/selinux/${selinuxvariant}/xsn.pp
+	install -p -m 644 SELinux/swyft.pp.${selinuxvariant} %{buildroot}%{_datadir}/selinux/${selinuxvariant}/swyft.pp
 done
 
 %if %{_buildqt}
 # qt icons
-install -D -p share/pixmaps/xsn.ico %{buildroot}%{_datadir}/pixmaps/xsn.ico
+install -D -p share/pixmaps/swyft.ico %{buildroot}%{_datadir}/pixmaps/swyft.ico
 install -p share/pixmaps/nsis-header.bmp %{buildroot}%{_datadir}/pixmaps/
 install -p share/pixmaps/nsis-wizard.bmp %{buildroot}%{_datadir}/pixmaps/
-install -p %{SOURCE100} %{buildroot}%{_datadir}/pixmaps/xsn.svg
-%{_bindir}/inkscape %{SOURCE100} --export-png=%{buildroot}%{_datadir}/pixmaps/xsn16.png -w16 -h16
-%{_bindir}/inkscape %{SOURCE100} --export-png=%{buildroot}%{_datadir}/pixmaps/xsn32.png -w32 -h32
-%{_bindir}/inkscape %{SOURCE100} --export-png=%{buildroot}%{_datadir}/pixmaps/xsn64.png -w64 -h64
-%{_bindir}/inkscape %{SOURCE100} --export-png=%{buildroot}%{_datadir}/pixmaps/xsn128.png -w128 -h128
-%{_bindir}/inkscape %{SOURCE100} --export-png=%{buildroot}%{_datadir}/pixmaps/xsn256.png -w256 -h256
-%{_bindir}/convert -resize 16x16 %{buildroot}%{_datadir}/pixmaps/xsn256.png %{buildroot}%{_datadir}/pixmaps/xsn16.xpm
-%{_bindir}/convert -resize 32x32 %{buildroot}%{_datadir}/pixmaps/xsn256.png %{buildroot}%{_datadir}/pixmaps/xsn32.xpm
-%{_bindir}/convert -resize 64x64 %{buildroot}%{_datadir}/pixmaps/xsn256.png %{buildroot}%{_datadir}/pixmaps/xsn64.xpm
-%{_bindir}/convert -resize 128x128 %{buildroot}%{_datadir}/pixmaps/xsn256.png %{buildroot}%{_datadir}/pixmaps/xsn128.xpm
-%{_bindir}/convert %{buildroot}%{_datadir}/pixmaps/xsn256.png %{buildroot}%{_datadir}/pixmaps/xsn256.xpm
+install -p %{SOURCE100} %{buildroot}%{_datadir}/pixmaps/swyft.svg
+%{_bindir}/inkscape %{SOURCE100} --export-png=%{buildroot}%{_datadir}/pixmaps/swyft16.png -w16 -h16
+%{_bindir}/inkscape %{SOURCE100} --export-png=%{buildroot}%{_datadir}/pixmaps/swyft32.png -w32 -h32
+%{_bindir}/inkscape %{SOURCE100} --export-png=%{buildroot}%{_datadir}/pixmaps/swyft64.png -w64 -h64
+%{_bindir}/inkscape %{SOURCE100} --export-png=%{buildroot}%{_datadir}/pixmaps/swyft128.png -w128 -h128
+%{_bindir}/inkscape %{SOURCE100} --export-png=%{buildroot}%{_datadir}/pixmaps/swyft256.png -w256 -h256
+%{_bindir}/convert -resize 16x16 %{buildroot}%{_datadir}/pixmaps/swyft256.png %{buildroot}%{_datadir}/pixmaps/swyft16.xpm
+%{_bindir}/convert -resize 32x32 %{buildroot}%{_datadir}/pixmaps/swyft256.png %{buildroot}%{_datadir}/pixmaps/swyft32.xpm
+%{_bindir}/convert -resize 64x64 %{buildroot}%{_datadir}/pixmaps/swyft256.png %{buildroot}%{_datadir}/pixmaps/swyft64.xpm
+%{_bindir}/convert -resize 128x128 %{buildroot}%{_datadir}/pixmaps/swyft256.png %{buildroot}%{_datadir}/pixmaps/swyft128.xpm
+%{_bindir}/convert %{buildroot}%{_datadir}/pixmaps/swyft256.png %{buildroot}%{_datadir}/pixmaps/swyft256.xpm
 touch %{buildroot}%{_datadir}/pixmaps/*.png -r %{SOURCE100}
 touch %{buildroot}%{_datadir}/pixmaps/*.xpm -r %{SOURCE100}
 
 # Desktop File - change the touch timestamp if modifying
 mkdir -p %{buildroot}%{_datadir}/applications
-cat <<EOF > %{buildroot}%{_datadir}/applications/xsn-core.desktop
+cat <<EOF > %{buildroot}%{_datadir}/applications/bitcoin-core.desktop
 [Desktop Entry]
 Encoding=UTF-8
-Name=XSN
-Comment=XSN P2P Cryptocurrency
-Comment[fr]=XSN, monnaie virtuelle cryptographique pair à pair
-Comment[tr]=XSN, eşten eşe kriptografik sanal para birimi
-Exec=xsn-qt %u
+Name=Swyft
+Comment=Swyft P2P Cryptocurrency
+Comment[fr]=Swyft, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=Swyft, eşten eşe kriptografik sanal para birimi
+Exec=swyft-qt %u
 Terminal=false
 Type=Application
-Icon=xsn128
-MimeType=x-scheme-handler/xsn;
+Icon=swyft128
+MimeType=x-scheme-handler/swyft;
 Categories=Office;Finance;
 EOF
 # change touch date when modifying desktop
-touch -a -m -t 201511100546 %{buildroot}%{_datadir}/applications/xsn-core.desktop
-%{_bindir}/desktop-file-validate %{buildroot}%{_datadir}/applications/xsn-core.desktop
+touch -a -m -t 201511100546 %{buildroot}%{_datadir}/applications/bitcoin-core.desktop
+%{_bindir}/desktop-file-validate %{buildroot}%{_datadir}/applications/bitcoin-core.desktop
 
 # KDE protocol - change the touch timestamp if modifying
 mkdir -p %{buildroot}%{_datadir}/kde4/services
-cat <<EOF > %{buildroot}%{_datadir}/kde4/services/xsn-core.protocol
+cat <<EOF > %{buildroot}%{_datadir}/kde4/services/bitcoin-core.protocol
 [Protocol]
-exec=xsn-qt '%u'
-protocol=xsn
+exec=swyft-qt '%u'
+protocol=swyft
 input=none
 output=none
 helper=true
@@ -296,14 +296,14 @@ makedir=false
 deleting=false
 EOF
 # change touch date when modifying protocol
-touch -a -m -t 201511100546 %{buildroot}%{_datadir}/kde4/services/xsn-core.protocol
+touch -a -m -t 201511100546 %{buildroot}%{_datadir}/kde4/services/bitcoin-core.protocol
 %endif
 
 # man pages
-install -D -p %{SOURCE20} %{buildroot}%{_mandir}/man1/xsnd.1
-install -p %{SOURCE21} %{buildroot}%{_mandir}/man1/xsn-cli.1
+install -D -p %{SOURCE20} %{buildroot}%{_mandir}/man1/swyftd.1
+install -p %{SOURCE21} %{buildroot}%{_mandir}/man1/swyft-cli.1
 %if %{_buildqt}
-install -p %{SOURCE22} %{buildroot}%{_mandir}/man1/xsn-qt.1
+install -p %{SOURCE22} %{buildroot}%{_mandir}/man1/swyft-qt.1
 %endif
 
 # nuke these, we do extensive testing of binaries in %%check before packaging
@@ -311,7 +311,7 @@ rm -f %{buildroot}%{_bindir}/test_*
 
 %check
 make check
-srcdir=src test/xsn-util-test.py
+srcdir=src test/swyft-util-test.py
 test/functional/test_runner.py --extended
 
 %post libs -p /sbin/ldconfig
@@ -319,37 +319,37 @@ test/functional/test_runner.py --extended
 %postun libs -p /sbin/ldconfig
 
 %pre server
-getent group xsn >/dev/null || groupadd -r xsn
-getent passwd xsn >/dev/null ||
-	useradd -r -g xsn -d /var/lib/xsn -s /sbin/nologin \
-	-c "XSN wallet server" xsn
+getent group swyft >/dev/null || groupadd -r swyft
+getent passwd swyft >/dev/null ||
+	useradd -r -g swyft -d /var/lib/swyft -s /sbin/nologin \
+	-c "Swyft wallet server" swyft
 exit 0
 
 %post server
-%systemd_post xsn.service
+%systemd_post swyft.service
 # SELinux
 if [ `%{_sbindir}/sestatus |grep -c "disabled"` -eq 0 ]; then
 for selinuxvariant in %{selinux_variants}; do
-	%{_sbindir}/semodule -s ${selinuxvariant} -i %{_datadir}/selinux/${selinuxvariant}/xsn.pp &> /dev/null || :
+	%{_sbindir}/semodule -s ${selinuxvariant} -i %{_datadir}/selinux/${selinuxvariant}/swyft.pp &> /dev/null || :
 done
-%{_sbindir}/semanage port -a -t xsn_port_t -p tcp 8332
-%{_sbindir}/semanage port -a -t xsn_port_t -p tcp 8333
-%{_sbindir}/semanage port -a -t xsn_port_t -p tcp 18332
-%{_sbindir}/semanage port -a -t xsn_port_t -p tcp 18333
-%{_sbindir}/semanage port -a -t xsn_port_t -p tcp 18443
-%{_sbindir}/semanage port -a -t xsn_port_t -p tcp 18444
-%{_sbindir}/fixfiles -R xsn-server restore &> /dev/null || :
-%{_sbindir}/restorecon -R %{_localstatedir}/lib/xsn || :
+%{_sbindir}/semanage port -a -t swyft_port_t -p tcp 8332
+%{_sbindir}/semanage port -a -t swyft_port_t -p tcp 8333
+%{_sbindir}/semanage port -a -t swyft_port_t -p tcp 18332
+%{_sbindir}/semanage port -a -t swyft_port_t -p tcp 18333
+%{_sbindir}/semanage port -a -t swyft_port_t -p tcp 18443
+%{_sbindir}/semanage port -a -t swyft_port_t -p tcp 18444
+%{_sbindir}/fixfiles -R swyft-server restore &> /dev/null || :
+%{_sbindir}/restorecon -R %{_localstatedir}/lib/swyft || :
 fi
 
 %posttrans server
 %{_bindir}/systemd-tmpfiles --create
 
 %preun server
-%systemd_preun xsn.service
+%systemd_preun swyft.service
 
 %postun server
-%systemd_postun xsn.service
+%systemd_postun swyft.service
 # SELinux
 if [ $1 -eq 0 ]; then
 	if [ `%{_sbindir}/sestatus |grep -c "disabled"` -eq 0 ]; then
@@ -360,11 +360,11 @@ if [ $1 -eq 0 ]; then
 	%{_sbindir}/semanage port -d -p tcp 18443
 	%{_sbindir}/semanage port -d -p tcp 18444
 	for selinuxvariant in %{selinux_variants}; do
-		%{_sbindir}/semodule -s ${selinuxvariant} -r xsn &> /dev/null || :
+		%{_sbindir}/semodule -s ${selinuxvariant} -r swyft &> /dev/null || :
 	done
-	%{_sbindir}/fixfiles -R xsn-server restore &> /dev/null || :
-	[ -d %{_localstatedir}/lib/xsn ] && \
-		%{_sbindir}/restorecon -R %{_localstatedir}/lib/xsn &> /dev/null || :
+	%{_sbindir}/fixfiles -R swyft-server restore &> /dev/null || :
+	[ -d %{_localstatedir}/lib/swyft ] && \
+		%{_sbindir}/restorecon -R %{_localstatedir}/lib/swyft &> /dev/null || :
 	fi
 fi
 
@@ -375,16 +375,16 @@ rm -rf %{buildroot}
 %files core
 %defattr(-,root,root,-)
 %license COPYING db-%{bdbv}.NC-LICENSE
-%doc COPYING xsn.conf.example doc/README.md doc/bips.md doc/files.md doc/multiwallet-qt.md doc/reduce-traffic.md doc/release-notes.md doc/tor.md
-%attr(0755,root,root) %{_bindir}/xsn-qt
-%attr(0644,root,root) %{_datadir}/applications/xsn-core.desktop
-%attr(0644,root,root) %{_datadir}/kde4/services/xsn-core.protocol
+%doc COPYING swyft.conf.example doc/README.md doc/bips.md doc/files.md doc/multiwallet-qt.md doc/reduce-traffic.md doc/release-notes.md doc/tor.md
+%attr(0755,root,root) %{_bindir}/swyft-qt
+%attr(0644,root,root) %{_datadir}/applications/bitcoin-core.desktop
+%attr(0644,root,root) %{_datadir}/kde4/services/bitcoin-core.protocol
 %attr(0644,root,root) %{_datadir}/pixmaps/*.ico
 %attr(0644,root,root) %{_datadir}/pixmaps/*.bmp
 %attr(0644,root,root) %{_datadir}/pixmaps/*.svg
 %attr(0644,root,root) %{_datadir}/pixmaps/*.png
 %attr(0644,root,root) %{_datadir}/pixmaps/*.xpm
-%attr(0644,root,root) %{_mandir}/man1/xsn-qt.1*
+%attr(0644,root,root) %{_mandir}/man1/swyft-qt.1*
 %endif
 
 %files libs
@@ -406,30 +406,30 @@ rm -rf %{buildroot}
 %files server
 %defattr(-,root,root,-)
 %license COPYING db-%{bdbv}.NC-LICENSE
-%doc COPYING xsn.conf.example doc/README.md doc/REST-interface.md doc/bips.md doc/dnsseed-policy.md doc/files.md doc/reduce-traffic.md doc/release-notes.md doc/tor.md
-%attr(0755,root,root) %{_sbindir}/xsnd
-%attr(0644,root,root) %{_tmpfilesdir}/xsn.conf
-%attr(0644,root,root) %{_unitdir}/xsn.service
-%dir %attr(0750,xsn,xsn) %{_sysconfdir}/xsn
-%dir %attr(0750,xsn,xsn) %{_localstatedir}/lib/xsn
-%config(noreplace) %attr(0600,root,root) %{_sysconfdir}/sysconfig/xsn
+%doc COPYING swyft.conf.example doc/README.md doc/REST-interface.md doc/bips.md doc/dnsseed-policy.md doc/files.md doc/reduce-traffic.md doc/release-notes.md doc/tor.md
+%attr(0755,root,root) %{_sbindir}/swyftd
+%attr(0644,root,root) %{_tmpfilesdir}/swyft.conf
+%attr(0644,root,root) %{_unitdir}/swyft.service
+%dir %attr(0750,swyft,swyft) %{_sysconfdir}/swyft
+%dir %attr(0750,swyft,swyft) %{_localstatedir}/lib/swyft
+%config(noreplace) %attr(0600,root,root) %{_sysconfdir}/sysconfig/swyft
 %attr(0644,root,root) %{_datadir}/selinux/*/*.pp
-%attr(0644,root,root) %{_mandir}/man1/xsnd.1*
+%attr(0644,root,root) %{_mandir}/man1/swyftd.1*
 
 %files utils
 %defattr(-,root,root,-)
 %license COPYING
-%doc COPYING xsn.conf.example doc/README.md
-%attr(0755,root,root) %{_bindir}/xsn-cli
-%attr(0755,root,root) %{_bindir}/xsn-tx
-%attr(0755,root,root) %{_bindir}/bench_xsn
-%attr(0644,root,root) %{_mandir}/man1/xsn-cli.1*
+%doc COPYING swyft.conf.example doc/README.md
+%attr(0755,root,root) %{_bindir}/swyft-cli
+%attr(0755,root,root) %{_bindir}/swyft-tx
+%attr(0755,root,root) %{_bindir}/bench_swyft
+%attr(0644,root,root) %{_mandir}/man1/swyft-cli.1*
 
 
 
 %changelog
 * Fri Feb 26 2016 Alice Wonder <buildmaster@librelamp.com> - 0.12.0-2
-- Rename Qt package from xsn to xsn-core
+- Rename Qt package from swyft to bitcoin-core
 - Make building of the Qt package optional
 - When building the Qt package, default to Qt5 but allow building
 -  against Qt4
@@ -439,4 +439,4 @@ rm -rf %{buildroot}
 - Initial spec file for 0.12.0 release
 
 # This spec file is written from scratch but a lot of the packaging decisions are directly
-# based upon the 0.11.2 package spec file from https://www.ringingliberty.com/xsn/
+# based upon the 0.11.2 package spec file from https://www.ringingliberty.com/swyft/

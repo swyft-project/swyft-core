@@ -42,7 +42,7 @@ WalletFrame > QDialog {
 }
 
 QDialog > QLabel {
-    color: "#333333"
+    color: #333333;
 }
 
 QStatusBar {
@@ -561,7 +561,7 @@ border: 1px solid #d7d7d7;
 QDialog .QTabWidget QTabBar::tab {
 background-color:#f2f0f0;
 color:#333;
-/*padding-left:10px;padding-right:10px;*/
+padding-left:10px;padding-right:10px;
 padding-top:5px;
 padding-bottom:5px;
 border-top: 1px solid #d7d7d7;
@@ -823,16 +823,16 @@ QDialog#HelpMessageDialog QScrollBar:vertical, QDialog#HelpMessageDialog QScroll
 border:0;
 }
 
-/* About Xsn Dialog */
+/* About Swyft Dialog */
 QDialog#AboutDialog {
 background-color:#F8F6F6;
 }
 
-QDialog#AboutDialog QLabel#label, QDialog#AboutDialog QLabel#copyrightLabel, QDialog#AboutDialog QLabel#label_2 { /* About Xsn Contents */
+QDialog#AboutDialog QLabel#label, QDialog#AboutDialog QLabel#copyrightLabel, QDialog#AboutDialog QLabel#label_2 { /* About Swyft Contents */
 margin-left:10px;
 }
 
-QDialog#AboutDialog QLabel#label_2 { /* Margin for About Xsn text */
+QDialog#AboutDialog QLabel#label_2 { /* Margin for About Swyft text */
 margin-right:10px;
 }
 
@@ -1200,7 +1200,7 @@ QWidget .QFrame#frame_2 { /* Transactions Widget */
 min-width:410px;
 margin-left:0;
 margin-top:0;
-/*background-image: url(':/images/drkblue/xsn_logo_horizontal');*/
+/*background-image: url(':/images/drkblue/swyft_logo_horizontal');*/
 background-repeat:none;
 }
 

@@ -1,5 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2017 The Bitcoin Core developers
+// Copyright (c) 2019 The Swyft Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -575,13 +576,13 @@ static bool ProcessBlockFound(const std::shared_ptr<const CBlock> &pblock, const
     return true;
 }
 
-// ***TODO*** that part changed in xsn, we are using a mix with old one here for now
-void static XSNMiner(const CChainParams& chainparams, CConnman& connman,
+// ***TODO*** that part changed in swyft, we are using a mix with old one here for now
+void static SwyftMiner(const CChainParams& chainparams, CConnman& connman,
                      CWallet* pwallet, bool fProofOfStake)
 {
-    LogPrintf("XsnMiner -- started\n");
+    LogPrintf("SwyftMiner -- started\n");
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
-    RenameThread("xsn-miner");
+    RenameThread("swyft-miner");
 
     unsigned int nExtraNonce = 0;
 
@@ -600,7 +601,7 @@ void static XSNMiner(const CChainParams& chainparams, CConnman& connman,
                 throw std::runtime_error("No coinbase script available (mining requires a wallet)");
 
             do {
-                bool fvNodesEmpty = connman.GetNodeCount(CConnman::CONNECTIONS_ALL) == 0;
+                bool fvNodesEmpty = connman.GetNodeCount(CConnman::CONNECTIONS_ALL) == 0 && Params().MiningRequiresPeers();
                 if (!fvNodesEmpty && !IsInitialBlockDownload() && masternodeSync.IsSynced())
                     break;
                 MilliSleep(1000);
@@ -669,14 +670,14 @@ void static XSNMiner(const CChainParams& chainparams, CConnman& connman,
             auto pblocktemplate = assemlber.CreateNewBlock(pwallet, coinbaseScript->reserveScript, fProofOfStake, contract, true);
             if (!pblocktemplate.get())
             {
-                LogPrintf("XsnMiner -- Failed to find a coinstake\n");
+                LogPrintf("SwyftMiner -- Failed to find a coinstake\n");
                 MilliSleep(5000);
                 continue;
             }
             auto pblock = std::make_shared<CBlock>(pblocktemplate->block);
             IncrementExtraNonce(pblock.get(), pindexPrev, nExtraNonce);
 
-            LogPrintf("XsnMiner -- Running miner with %u transactions in block (%u bytes)\n", pblock->vtx.size(),
+            LogPrintf("SwyftMiner -- Running miner with %u transactions in block (%u bytes)\n", pblock->vtx.size(),
                       ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
 
             //Sign block
@@ -687,7 +688,7 @@ void static XSNMiner(const CChainParams& chainparams, CConnman& connman,
                 CBlockSigner signer(*pblock, pwallet, contract);
 
                 if (!signer.SignBlock()) {
-                    LogPrintf("XSNMiner(): Signing new block failed \n");
+                    LogPrintf("SwyftMiner(): Signing new block failed \n");
                     throw std::runtime_error(strprintf("%s: SignBlock failed", __func__));
                 }
 
@@ -695,9 +696,12 @@ void static XSNMiner(const CChainParams& chainparams, CConnman& connman,
             }
 
             // check if block is valid
-            CValidationState state;
-            if (!TestBlockValidity(state, chainparams, *pblock, pindexPrev, false, false)) {
-                throw std::runtime_error(strprintf("%s: TestBlockValidity failed: %s", __func__, FormatStateMessage(state)));
+            {
+                LOCK(cs_main);
+                CValidationState state;
+                if (!TestBlockValidity(state, chainparams, *pblock, pindexPrev, false, false)) {
+                    throw std::runtime_error(strprintf("%s: TestBlockValidity failed: %s", __func__, FormatStateMessage(state)));
+                }
             }
 
             // process proof of stake block
@@ -726,7 +730,7 @@ void static XSNMiner(const CChainParams& chainparams, CConnman& connman,
                     {
                         // Found a solution
                         SetThreadPriority(THREAD_PRIORITY_NORMAL);
-                        LogPrintf("XsnMiner:\n  proof-of-work found\n  hash: %s\n  target: %s\n", hash.GetHex(), hashTarget.GetHex());
+                        LogPrintf("SwyftMiner:\n  proof-of-work found\n  hash: %s\n  target: %s\n", hash.GetHex(), hashTarget.GetHex());
                         ProcessBlockFound(pblock, chainparams);
                         SetThreadPriority(THREAD_PRIORITY_LOWEST);
                         coinbaseScript->KeepScript();
@@ -747,7 +751,7 @@ void static XSNMiner(const CChainParams& chainparams, CConnman& connman,
                 // Check for stop or if block needs to be rebuilt
                 boost::this_thread::interruption_point();
                 // Regtest mode doesn't require peers
-                if (connman.GetNodeCount(CConnman::CONNECTIONS_ALL) == 0)
+                if (connman.GetNodeCount(CConnman::CONNECTIONS_ALL) == 0 && Params().MiningRequiresPeers())
                     break;
                 if (pblock->nNonce >= 0xffff0000)
                     break;
@@ -770,18 +774,18 @@ void static XSNMiner(const CChainParams& chainparams, CConnman& connman,
         }
         catch (const boost::thread_interrupted&)
         {
-            LogPrintf("XsnMiner -- terminated\n");
+            LogPrintf("SwyftMiner -- terminated\n");
             throw;
         }
         catch (const std::runtime_error &e)
         {
-            LogPrintf("XsnMiner -- runtime error: %s\n", e.what());
+            LogPrintf("SwyftMiner -- runtime error: %s\n", e.what());
             //            return;
         }
     }
 }
 
-void GenerateXSNs(bool fGenerate,
+void GenerateSwyfts(bool fGenerate,
                   int nThreads,
                   const CChainParams& chainparams,
                   CConnman &connman)
@@ -803,7 +807,7 @@ void GenerateXSNs(bool fGenerate,
 
     minerThreads = new boost::thread_group();
     for (int i = 0; i < nThreads; i++)
-        minerThreads->create_thread(boost::bind(&XSNMiner, boost::cref(chainparams), boost::ref(connman), GetWallets().front(), false));
+        minerThreads->create_thread(boost::bind(&SwyftMiner, boost::cref(chainparams), boost::ref(connman), GetWallets().front(), false));
 }
 
 void ThreadStakeMinter(const CChainParams &chainparams, CConnman &connman, CWallet *pwallet)
@@ -811,7 +815,7 @@ void ThreadStakeMinter(const CChainParams &chainparams, CConnman &connman, CWall
     boost::this_thread::interruption_point();
     LogPrintf("ThreadStakeMinter started\n");
     try {
-        XSNMiner(chainparams, connman, pwallet, true);
+        SwyftMiner(chainparams, connman, pwallet, true);
         boost::this_thread::interruption_point();
     } catch (std::exception& e) {
         LogPrintf("ThreadStakeMinter() exception %s\n", e.what());

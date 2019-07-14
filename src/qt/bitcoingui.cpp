@@ -1,5 +1,6 @@
 // Copyright (c) 2011-2015 The Bitcoin Core developers
 // Copyright (c) 2014-2017 The Dash Core developers
+// Copyright (c) 2019 The Swyft Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -154,6 +155,7 @@ BitcoinGUI::BitcoinGUI(interfaces::Node& node, const PlatformStyle *_platformSty
     overviewAction(0),
     historyAction(0),
     masternodeAction(0),
+    informationAction(0),
     quitAction(0),
     sendCoinsAction(0),
     sendCoinsMenuAction(0),
@@ -193,7 +195,7 @@ BitcoinGUI::BitcoinGUI(interfaces::Node& node, const PlatformStyle *_platformSty
 
     GUIUtil::restoreWindowGeometry("nWindow", QSize(850, 550), this);
 
-    QString windowTitle = tr("XSN Core") + " - ";
+    QString windowTitle = tr("Swyft Core") + " - ";
 #ifdef ENABLE_WALLET
     enableWallet = WalletModel::isWalletEnabled();
 #endif // ENABLE_WALLET
@@ -371,7 +373,7 @@ void BitcoinGUI::createActions()
     tabGroup->addAction(overviewAction);
 
     sendCoinsAction = new QAction(QIcon(":/icons/" + theme + "/send"), tr("&Send"), this);
-    sendCoinsAction->setStatusTip(tr("Send coins to a XSN address"));
+    sendCoinsAction->setStatusTip(tr("Send coins to a Swyft address"));
     sendCoinsAction->setToolTip(sendCoinsAction->statusTip());
     sendCoinsAction->setCheckable(true);
 #ifdef Q_OS_MAC
@@ -386,7 +388,7 @@ void BitcoinGUI::createActions()
     sendCoinsMenuAction->setToolTip(sendCoinsMenuAction->statusTip());
 
     receiveCoinsAction = new QAction(QIcon(":/icons/" + theme + "/receiving_addresses"), tr("&Receive"), this);
-    receiveCoinsAction->setStatusTip(tr("Request payments (generates QR codes and xsn: URIs)"));
+    receiveCoinsAction->setStatusTip(tr("Request payments (generates QR codes and swyft: URIs)"));
     receiveCoinsAction->setToolTip(receiveCoinsAction->statusTip());
     receiveCoinsAction->setCheckable(true);
 #ifdef Q_OS_MAC
@@ -410,6 +412,19 @@ void BitcoinGUI::createActions()
     historyAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_4));
 #endif
     tabGroup->addAction(historyAction);
+
+    informationAction = new QAction(QIcon(":/icons/" + theme + "/masternodes"), tr("&Information"), this);
+    informationAction->setStatusTip(tr("Recent information about the project"));
+    informationAction->setToolTip(informationAction->statusTip());
+    informationAction->setCheckable(true);
+
+#ifdef Q_OS_MAC
+    informationAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_6));
+#else
+    informationAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
+#endif
+
+    tabGroup->addAction(informationAction);
 
 #ifdef ENABLE_WALLET
     QSettings settings;
@@ -442,21 +457,23 @@ void BitcoinGUI::createActions()
     connect(receiveCoinsMenuAction, SIGNAL(triggered()), this, SLOT(gotoReceiveCoinsPage()));
     connect(historyAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(historyAction, SIGNAL(triggered()), this, SLOT(gotoHistoryPage()));
+    connect(informationAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(informationAction, SIGNAL(triggered()), this, SLOT(gotoInformationPage()));
 #endif // ENABLE_WALLET
 
     quitAction = new QAction(QIcon(":/icons/" + theme + "/quit"), tr("E&xit"), this);
     quitAction->setStatusTip(tr("Quit application"));
     quitAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
     quitAction->setMenuRole(QAction::QuitRole);
-    aboutAction = new QAction(QIcon(":/icons/" + theme + "/about"), tr("&About XSN Core"), this);
-    aboutAction->setStatusTip(tr("Show information about XSN Core"));
+    aboutAction = new QAction(QIcon(":/icons/" + theme + "/about"), tr("&About Swyft Core"), this);
+    aboutAction->setStatusTip(tr("Show information about Swyft Core"));
     aboutAction->setMenuRole(QAction::AboutRole);
     aboutAction->setEnabled(false);
     aboutQtAction = new QAction(QIcon(":/icons/" + theme + "/about_qt"), tr("About &Qt"), this);
     aboutQtAction->setStatusTip(tr("Show information about Qt"));
     aboutQtAction->setMenuRole(QAction::AboutQtRole);
     optionsAction = new QAction(QIcon(":/icons/" + theme + "/options"), tr("&Options..."), this);
-    optionsAction->setStatusTip(tr("Modify configuration options for XSN Core"));
+    optionsAction->setStatusTip(tr("Modify configuration options for Swyft Core"));
     optionsAction->setMenuRole(QAction::PreferencesRole);
     optionsAction->setEnabled(false);
     toggleHideAction = new QAction(QIcon(":/icons/" + theme + "/about"), tr("&Show / Hide"), this);
@@ -473,9 +490,9 @@ void BitcoinGUI::createActions()
     unlockWalletAction->setToolTip(tr("Unlock wallet"));
     lockWalletAction = new QAction(tr("&Lock Wallet"), this);
     signMessageAction = new QAction(QIcon(":/icons/" + theme + "/edit"), tr("Sign &message..."), this);
-    signMessageAction->setStatusTip(tr("Sign messages with your XSN addresses to prove you own them"));
+    signMessageAction->setStatusTip(tr("Sign messages with your Swyft addresses to prove you own them"));
     verifyMessageAction = new QAction(QIcon(":/icons/" + theme + "/transaction_0"), tr("&Verify message..."), this);
-    verifyMessageAction->setStatusTip(tr("Verify messages to ensure they were signed with specified XSN addresses"));
+    verifyMessageAction->setStatusTip(tr("Verify messages to ensure they were signed with specified Swyft addresses"));
 
     openInfoAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_MessageBoxInformation), tr("&Information"), this);
     openInfoAction->setStatusTip(tr("Show diagnostic information"));
@@ -506,11 +523,11 @@ void BitcoinGUI::createActions()
     usedReceivingAddressesAction->setStatusTip(tr("Show the list of used receiving addresses and labels"));
 
     openAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_DirOpenIcon), tr("Open &URI..."), this);
-    openAction->setStatusTip(tr("Open a xsn: URI or payment request"));
+    openAction->setStatusTip(tr("Open a swyft: URI or payment request"));
 
     showHelpMessageAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_MessageBoxInformation), tr("&Command-line options"), this);
     showHelpMessageAction->setMenuRole(QAction::NoRole);
-    showHelpMessageAction->setStatusTip(tr("Show the XSN Core help message to get a list with possible XSN Core command-line options"));
+    showHelpMessageAction->setStatusTip(tr("Show the Swyft Core help message to get a list with possible Swyft Core command-line options"));
 
     showPrivateSendHelpAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_MessageBoxInformation), tr("&PrivateSend information"), this);
     showPrivateSendHelpAction->setMenuRole(QAction::NoRole);
@@ -645,15 +662,19 @@ void BitcoinGUI::createToolBarWidgets(QToolBar *toolbar)
 
     shortcut = CreateShortcut(Qt::Key_3);
 
-    std::tie(label, sendCoinsAction) = CreateWidgetHelper("send", tr("Send coins to a XSN address"));
+    std::tie(label, sendCoinsAction) = CreateWidgetHelper("send", tr("Send coins to a Swyft address"));
 
     shortcut = CreateShortcut(Qt::Key_4);
 
-    std::tie(label, receiveCoinsAction) = CreateWidgetHelper("receive", tr("Request payments (generates QR codes and xsn: URIs)"));
+    std::tie(label, receiveCoinsAction) = CreateWidgetHelper("receive", tr("Request payments (generates QR codes and swyft: URIs)"));
 
     shortcut = CreateShortcut(Qt::Key_5);
 
     std::tie(label, tposTabAction) = CreateWidgetHelper("tpos", tr("Stake coins using trustless staking"));
+
+    shortcut = CreateShortcut(Qt::Key_6);
+
+    std::tie(label, informationAction) = CreateWidgetHelper("information", tr("Recent information about the project"));
 
     //    shortcut = CreateShortcut(Qt::Key_6);
 
@@ -671,7 +692,6 @@ void BitcoinGUI::createToolBarWidgets(QToolBar *toolbar)
         connect(masternodeAction, SIGNAL(triggered()), this, SLOT(gotoMasternodePage()));
     }
 
-
     // These showNormalIfMinimized are needed because Send Coins and Receive Coins
     // can be triggered from the tray menu, and need to show the GUI to be useful.
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
@@ -688,6 +708,8 @@ void BitcoinGUI::createToolBarWidgets(QToolBar *toolbar)
     connect(ghostCoinsAction, SIGNAL(triggered()), this, SLOT(gotoStealthModePage()));
     connect(merchantAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(merchantAction, SIGNAL(triggered()), this, SLOT(gotoMerchantPage()));
+    connect(informationAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+    connect(informationAction, SIGNAL(triggered()), this, SLOT(gotoInformationPage()));
 #endif // ENABLE_WALLET
 }
 
@@ -888,6 +910,7 @@ void BitcoinGUI::setWalletActionsEnabled(bool enabled)
     if (settings.value("fShowMasternodesTab").toBool() && masternodeAction) {
         masternodeAction->setEnabled(enabled);
     }
+    informationAction->setEnabled(enabled);
     encryptWalletAction->setEnabled(enabled);
     backupWalletAction->setEnabled(enabled);
     changePassphraseAction->setEnabled(enabled);
@@ -901,7 +924,7 @@ void BitcoinGUI::setWalletActionsEnabled(bool enabled)
 void BitcoinGUI::createTrayIcon(const NetworkStyle *networkStyle)
 {
     trayIcon = new QSystemTrayIcon(this);
-    QString toolTip = tr("XSN Core client") + " " + networkStyle->getTitleAddText();
+    QString toolTip = tr("Swyft Core client") + " " + networkStyle->getTitleAddText();
     trayIcon->setToolTip(toolTip);
     trayIcon->setIcon(networkStyle->getTrayAndWindowIcon());
     trayIcon->hide();
@@ -1069,6 +1092,12 @@ void BitcoinGUI::gotoMasternodePage()
     }
 }
 
+void BitcoinGUI::gotoInformationPage()
+{
+    informationAction->setChecked(true);
+    if (walletFrame) walletFrame->gotoInformationPage();
+}
+
 void BitcoinGUI::gotoReceiveCoinsPage()
 {
     receiveCoinsAction->setChecked(true);
@@ -1114,7 +1143,7 @@ void BitcoinGUI::updateNetworkState()
     }
 
     if (m_node.getNetworkActive()) {
-        labelConnectionsIcon->setToolTip(tr("%n active connection(s) to XSN network", "", count));
+        labelConnectionsIcon->setToolTip(tr("%n active connection(s) to Swyft network", "", count));
     } else {
         labelConnectionsIcon->setToolTip(tr("Network activity disabled"));
         icon = ":/icons/" + theme + "/network_disabled";
@@ -1316,7 +1345,7 @@ void BitcoinGUI::setAdditionalDataSyncProgress(double nSyncProgress)
 
 void BitcoinGUI::message(const QString &title, const QString &message, unsigned int style, bool *ret)
 {
-    QString strTitle = tr("XSN Core"); // default title
+    QString strTitle = tr("Swyft Core"); // default title
     // Default to information icon
     int nMBoxIcon = QMessageBox::Information;
     int nNotifyIcon = Notificator::Information;
@@ -1342,7 +1371,7 @@ void BitcoinGUI::message(const QString &title, const QString &message, unsigned 
             break;
         }
     }
-    // Append title to "XSN Core - "
+    // Append title to "Swyft Core - "
     if (!msgType.isEmpty())
         strTitle += " - " + msgType;
 

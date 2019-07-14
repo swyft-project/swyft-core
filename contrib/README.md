@@ -13,7 +13,7 @@ Construct a linear, no-fork, best version of the blockchain.
 
 ### [Qos](/contrib/qos) ###
 
-A Linux bash script that will set up traffic control (tc) to limit the outgoing bandwidth for connections to the XSN network. This means one can have an always-on xsnd instance running, and another local xsnd/xsn-qt instance which connects to this node and receives blocks from it.
+A Linux bash script that will set up traffic control (tc) to limit the outgoing bandwidth for connections to the Swyft network. This means one can have an always-on swyftd instance running, and another local swyftd/swyft-qt instance which connects to this node and receives blocks from it.
 
 ### [Seeds](/contrib/seeds) ###
 Utility to generate the pnSeed[] array that is compiled into the client.
@@ -22,20 +22,20 @@ Build Tools and Keys
 ---------------------
 
 ### [Debian](/contrib/debian) ###
-Contains files used to package xsnd/xsn-qt
-for Debian-based Linux systems. If you compile xsnd/xsn-qt yourself, there are some useful files here.
+Contains files used to package swyftd/swyft-qt
+for Debian-based Linux systems. If you compile swyftd/swyft-qt yourself, there are some useful files here.
 
 ### [Gitian-descriptors](/contrib/gitian-descriptors) ###
-Files used during the gitian build process. For more information about gitian, see the [the XSN Core documentation repository](https://github.com/xsn-core/docs).
+Files used during the gitian build process. For more information about gitian, see the [the Swyft Core documentation repository](https://github.com/bitcoin-core/docs).
 
 ### [Gitian-keys](/contrib/gitian-keys)
-PGP keys used for signing XSN Core [Gitian release](/doc/release-process.md) results.
+PGP keys used for signing Swyft Core [Gitian release](/doc/release-process.md) results.
 
 ### [MacDeploy](/contrib/macdeploy) ###
 Scripts and notes for Mac builds. 
 
 ### [RPM](/contrib/rpm) ###
-RPM spec file for building xsn-core on RPM based distributions.
+RPM spec file for building bitcoin-core on RPM based distributions.
 
 ### [Gitian-build](/contrib/gitian-build.sh) ###
 Script for running full Gitian builds.
@@ -44,7 +44,7 @@ Test and Verify Tools
 ---------------------
 
 ### [TestGen](/contrib/testgen) ###
-Utilities to generate test vectors for the data-driven XSN tests.
+Utilities to generate test vectors for the data-driven Swyft tests.
 
 ### [Verify Binaries](/contrib/verifybinaries) ###
-This script attempts to download and verify the signature file SHA256SUMS.asc from xsn.org.
+This script attempts to download and verify the signature file SHA256SUMS.asc from swyft.network.

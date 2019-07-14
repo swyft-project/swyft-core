@@ -9,13 +9,13 @@ Dockerfile
 
 # build output
 **/*.exe
-src/xsn
-src/xsnd
-src/xsn-cli
-src/xsn-tx
-src/test/test_xsn
-src/test/test_xsn_fuzzy
-src/qt/test/test_xsn-qt
+src/swyft
+src/swyftd
+src/swyft-cli
+src/swyft-tx
+src/test/test_swyft
+src/test/test_swyft_fuzzy
+src/qt/test/test_swyft-qt
 
 # autoreconf
 **/*.tar.gz
@@ -86,12 +86,12 @@ src/tor.timestamp*
 # Compilation and Qt preprocessor part
 **/*.qm
 **/Makefile
-**/xsn-qt*
+**/swyft-qt*
 **/Zcoin-Qt.app
 
 # Unit-tests
 **/Makefile.test
-**/xsn-qt_test
+**/swyft-qt_test
 
 # Resources cpp
 **/qrc_*.cpp
@@ -104,7 +104,7 @@ build
 **/*.gcno
 **/*.gcda
 *.info
-test_xsn.coverage
+test_swyft.coverage
 total.coverage
 coverage_percent.txt
 
@@ -120,5 +120,5 @@ src/test/buildenv.py
 
 doc/doxygen
 
-libxsnconsensus.pc
+libswyftconsensus.pc
 contrib/devtools/split-debug.sh
