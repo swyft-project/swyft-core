@@ -811,16 +811,16 @@ QDialog#HelpMessageDialog QScrollBar:vertical, QDialog#HelpMessageDialog QScroll
 border:0;
 }
 
-/* About Xsn Dialog */
+/* About Swyft Dialog */
 QDialog#AboutDialog {
 background-color:#F8F6F6;
 }
 
-QDialog#AboutDialog QLabel#label, QDialog#AboutDialog QLabel#copyrightLabel, QDialog#AboutDialog QLabel#label_2 { /* About Xsn Contents */
+QDialog#AboutDialog QLabel#label, QDialog#AboutDialog QLabel#copyrightLabel, QDialog#AboutDialog QLabel#label_2 { /* About Swyft Contents */
 margin-left:10px;
 }
 
-QDialog#AboutDialog QLabel#label_2 { /* Margin for About Xsn text */
+QDialog#AboutDialog QLabel#label_2 { /* Margin for About Swyft text */
 margin-right:10px;
 }
 
@@ -1187,7 +1187,7 @@ QWidget .QFrame#frame_2 { /* Transactions Widget */
 min-width:410px;
 margin-left:0;
 margin-top:15px;
-/*background-image: url(':/images/light/xsn_logo_horizontal');*/
+/*background-image: url(':/images/light/swyft_logo_horizontal');*/
 background-repeat:none;
 }
 

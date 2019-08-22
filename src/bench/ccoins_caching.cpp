@@ -1,4 +1,5 @@
 // Copyright (c) 2016-2017 The Bitcoin Core developers
+// Copyright (c) 2019 The Swyft Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -52,7 +53,7 @@ SetupDummyInputs(CBasicKeyStore& keystoreRet, CCoinsViewCache& coinsRet)
 // many times micro-benchmarks of the database showed completely different
 // characteristics than e.g. reindex timings. But that's not a requirement of
 // every benchmark."
-// (https://github.com/xsn/xsn/issues/7883#issuecomment-224807484)
+// (https://github.com/swyft-project/swyft-core/issues/7883#issuecomment-224807484)
 static void CCoinsCaching(benchmark::State& state)
 {
     CBasicKeyStore keystore;

@@ -1,31 +1,31 @@
-# /etc/conf.d/xsnd: config file for /etc/init.d/xsnd
+# /etc/conf.d/swyftd: config file for /etc/init.d/swyftd
 
 # Config file location
-#BITCOIND_CONFIGFILE="/etc/xsn/xsn.conf"
+#BITCOIND_CONFIGFILE="/etc/swyft/swyft.conf"
 
 # What directory to write pidfile to?  (created and owned by $BITCOIND_USER)
-#BITCOIND_PIDDIR="/var/run/xsnd"
+#BITCOIND_PIDDIR="/var/run/swyftd"
 
 # What filename to give the pidfile
-#BITCOIND_PIDFILE="${BITCOIND_PIDDIR}/xsnd.pid"
+#BITCOIND_PIDFILE="${BITCOIND_PIDDIR}/swyftd.pid"
 
-# Where to write xsnd data (be mindful that the blockchain is large)
-#BITCOIND_DATADIR="/var/lib/xsnd"
+# Where to write swyftd data (be mindful that the blockchain is large)
+#BITCOIND_DATADIR="/var/lib/swyftd"
 
-# User and group to own xsnd process
-#BITCOIND_USER="xsn"
-#BITCOIND_GROUP="xsn"
+# User and group to own swyftd process
+#BITCOIND_USER="swyft"
+#BITCOIND_GROUP="swyft"
 
-# Path to xsnd executable
-#BITCOIND_BIN="/usr/bin/xsnd"
+# Path to swyftd executable
+#BITCOIND_BIN="/usr/bin/swyftd"
 
-# Nice value to run xsnd under
+# Nice value to run swyftd under
 #BITCOIND_NICE=0
 
 # Additional options (avoid -conf and -datadir, use flags above)
 #BITCOIND_OPTS=""
 
-# The timeout in seconds OpenRC will wait for xsnd to terminate
+# The timeout in seconds OpenRC will wait for swyftd to terminate
 # after a SIGTERM has been raised.
 # Note that this will be mapped as argument to start-stop-daemon's
 # '--retry' option, which means you can specify a retry schedule

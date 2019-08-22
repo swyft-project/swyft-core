@@ -2,7 +2,7 @@ NetBSD build guide
 ======================
 (updated for NetBSD 7.0)
 
-This guide describes how to build xsnd and command-line utilities on NetBSD.
+This guide describes how to build swyftd and command-line utilities on NetBSD.
 
 This guide does not contain instructions for building the GUI.
 
@@ -25,12 +25,12 @@ python27
 
 Download the source code:
 ```
-git clone https://github.com/xsn/xsn
+git clone https://github.com/swyft-project/swyft-core
 ```
 
 See [dependencies.md](dependencies.md) for a complete overview.
 
-### Building XSN Core
+### Building Swyft Core
 
 **Important**: Use `gmake` (the non-GNU `make` will exit with an error).
 

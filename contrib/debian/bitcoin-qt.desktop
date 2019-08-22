@@ -1,14 +1,14 @@
 [Desktop Entry]
 Version=1.0
-Name=XSN Core
-Comment=Connect to the XSN P2P Network
-Comment[de]=Verbinde mit dem XSN peer-to-peer Netzwerk
-Comment[fr]=XSN, monnaie virtuelle cryptographique pair à pair
-Comment[tr]=XSN, eşten eşe kriptografik sanal para birimi
-Exec=xsn-qt %u
+Name=Swyft Core
+Comment=Connect to the Swyft P2P Network
+Comment[de]=Verbinde mit dem Swyft peer-to-peer Netzwerk
+Comment[fr]=Swyft, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=Swyft, eşten eşe kriptografik sanal para birimi
+Exec=swyft-qt %u
 Terminal=false
 Type=Application
-Icon=xsn128
-MimeType=x-scheme-handler/xsn;
+Icon=swyft128
+MimeType=x-scheme-handler/swyft;
 Categories=Office;Finance;P2P;Network;Qt;
-StartupWMClass=XSN-qt
+StartupWMClass=Swyft-Qt

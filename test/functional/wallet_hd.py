@@ -7,14 +7,14 @@
 import os
 import shutil
 
-from test_framework.test_framework import XSNTestFramework
+from test_framework.test_framework import SwyftTestFramework
 from test_framework.util import (
     assert_equal,
     connect_nodes_bi,
 )
 
 
-class WalletHDTest(XSNTestFramework):
+class WalletHDTest(SwyftTestFramework):
     def set_test_params(self):
         self.setup_clean_chain = True
         self.num_nodes = 2

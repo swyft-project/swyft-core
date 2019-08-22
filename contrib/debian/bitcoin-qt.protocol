@@ -1,6 +1,6 @@
 [Protocol]
-exec=xsn-qt '%u'
-protocol=xsn
+exec=swyft-qt '%u'
+protocol=swyft
 input=none
 output=none
 helper=true

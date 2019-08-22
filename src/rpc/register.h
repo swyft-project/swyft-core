@@ -1,4 +1,5 @@
 // Copyright (c) 2009-2016 The Bitcoin Core developers
+// Copyright (c) 2019 The Swyft Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -19,8 +20,8 @@ void RegisterMiscRPCCommands(CRPCTable &tableRPC);
 void RegisterMiningRPCCommands(CRPCTable &tableRPC);
 /** Register raw transaction RPC commands */
 void RegisterRawTransactionRPCCommands(CRPCTable &tableRPC);
-/** Register XSN misc RPC commands */
-void RegisterXSNMiscCommands(CRPCTable &tableRPC);
+/** Register Swyft misc RPC commands */
+void RegisterSwyftMiscCommands(CRPCTable &tableRPC);
 void RegisterMasternodeCommands(CRPCTable &tableRPC);
 void RegisterMerchantnodeCommands(CRPCTable &tableRPC);
 void RegisterGovernanceRPCCommands(CRPCTable &tableRPC);
@@ -32,7 +33,7 @@ static inline void RegisterAllCoreRPCCommands(CRPCTable &t)
     RegisterMiscRPCCommands(t);
     RegisterMiningRPCCommands(t);
     RegisterRawTransactionRPCCommands(t);
-    RegisterXSNMiscCommands(t);
+    RegisterSwyftMiscCommands(t);
     RegisterMasternodeCommands(t);
     RegisterMerchantnodeCommands(t);
     RegisterGovernanceRPCCommands(t);

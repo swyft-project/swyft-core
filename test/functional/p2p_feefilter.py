@@ -5,7 +5,7 @@
 """Test processing of feefilter messages."""
 
 from test_framework.mininode import *
-from test_framework.test_framework import XSNTestFramework
+from test_framework.test_framework import SwyftTestFramework
 from test_framework.util import *
 import time
 
@@ -36,7 +36,7 @@ class TestP2PConn(P2PInterface):
         with mininode_lock:
             self.txinvs = []
 
-class FeeFilterTest(XSNTestFramework):
+class FeeFilterTest(SwyftTestFramework):
     def set_test_params(self):
         self.num_nodes = 2
 

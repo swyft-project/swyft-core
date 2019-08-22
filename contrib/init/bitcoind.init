@@ -1,36 +1,36 @@
 #!/bin/bash
 #
-#  xsnd The xsn core server.
+#  swyftd The swyft core server.
 #
 #
 # chkconfig: 345 80 20
-# description: xsnd
-# processname: xsnd
+# description: swyftd
+# processname: swyftd
 #
 
 # Source function library.
 . /etc/init.d/functions
 
-# you can override defaults in /etc/sysconfig/xsnd, see below
-if [ -f /etc/sysconfig/xsnd ]; then
-        . /etc/sysconfig/xsnd
+# you can override defaults in /etc/sysconfig/swyftd, see below
+if [ -f /etc/sysconfig/swyftd ]; then
+        . /etc/sysconfig/swyftd
 fi
 
 RETVAL=0
 
-prog=xsnd
-# you can override the lockfile via BITCOIND_LOCKFILE in /etc/sysconfig/xsnd
-lockfile=${BITCOIND_LOCKFILE-/var/lock/subsys/xsnd}
+prog=swyftd
+# you can override the lockfile via BITCOIND_LOCKFILE in /etc/sysconfig/swyftd
+lockfile=${BITCOIND_LOCKFILE-/var/lock/subsys/swyftd}
 
-# xsnd defaults to /usr/bin/xsnd, override with BITCOIND_BIN
-xsnd=${BITCOIND_BIN-/usr/bin/xsnd}
+# swyftd defaults to /usr/bin/swyftd, override with BITCOIND_BIN
+swyftd=${BITCOIND_BIN-/usr/bin/swyftd}
 
-# xsnd opts default to -disablewallet, override with BITCOIND_OPTS
-xsnd_opts=${BITCOIND_OPTS--disablewallet}
+# swyftd opts default to -disablewallet, override with BITCOIND_OPTS
+swyftd_opts=${BITCOIND_OPTS--disablewallet}
 
 start() {
     echo -n $"Starting $prog: "
-    daemon $DAEMONOPTS $xsnd $xsnd_opts
+    daemon $DAEMONOPTS $swyftd $swyftd_opts
     RETVAL=$?
     echo
     [ $RETVAL -eq 0 ] && touch $lockfile

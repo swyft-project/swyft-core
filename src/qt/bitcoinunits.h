@@ -1,4 +1,5 @@
 // Copyright (c) 2011-2017 The Bitcoin Core developers
+// Copyright (c) 2019 The Swyft Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -56,10 +57,10 @@ public:
      */
     enum Unit
     {
-        XSN,
-        mXSN,
-        uXSN,
-        duffs
+        SWYFT,
+        mSWYFT,
+        uSWYFT,
+        sats
     };
 
     enum SeparatorStyle

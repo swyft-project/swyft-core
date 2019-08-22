@@ -1,4 +1,5 @@
 // Copyright (c) 2014-2017 The Dash Core developers
+// Copyright (c) 2019 The Swyft Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -37,7 +38,7 @@ extern CMasternodePayments mnpayments;
 bool IsBlockValueValid(const CBlock& block, int nBlockHeight, CAmount expectedReward, CAmount actualReward, std::string &strErrorRet);
 bool IsBlockPayeeValid(const CTransactionRef &txNew, int nBlockHeight, CAmount expectedReward, CAmount actualReward);
 void FillBlockPayments(CMutableTransaction& txNew, int nBlockHeight, CAmount blockReward, CTxOut& txoutMasternodeRet, std::vector<CTxOut>& voutSuperblockRet);
-void AdjustMasternodePayment(CMutableTransaction &tx, const CTxOut& txoutMasternodePayment, const TPoSContract &tposContract);
+void AdjustMasternodePayment(CMutableTransaction &tx, CAmount blockReward, const CTxOut& txoutMasternodePayment, const TPoSContract &tposContract);
 std::string GetRequiredPaymentsString(int nBlockHeight);
 
 class CMasternodePayee

@@ -1,4 +1,5 @@
 // Copyright (c) 2011-2016 The Bitcoin Core developers
+// Copyright (c) 2019 The Swyft Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -48,9 +49,9 @@ static const int MAX_URI_LENGTH = 255;
 /* Number of frames in spinner animation */
 #define SPINNER_FRAMES 36
 
-#define QAPP_ORG_NAME "XSN"
-#define QAPP_ORG_DOMAIN "xsn.org"
-#define QAPP_APP_NAME_DEFAULT "XSN-Qt"
-#define QAPP_APP_NAME_TESTNET "XSN-Qt-testnet"
+#define QAPP_ORG_NAME "Swyft"
+#define QAPP_ORG_DOMAIN "swyft.network"
+#define QAPP_APP_NAME_DEFAULT "Swyft-Qt"
+#define QAPP_APP_NAME_TESTNET "Swyft-Qt-testnet"
 
 #endif // BITCOIN_QT_GUICONSTANTS_H

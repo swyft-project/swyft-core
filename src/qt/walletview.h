@@ -1,4 +1,5 @@
 // Copyright (c) 2011-2017 The Bitcoin Core developers
+// Copyright (c) 2019 The Swyft Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -22,6 +23,7 @@ class WalletModel;
 class AddressBookPage;
 class TPoSPage;
 class TransactionsDialog;
+class InformationPage;
 
 QT_BEGIN_NAMESPACE
 class QModelIndex;
@@ -70,6 +72,7 @@ private:
     AddressBookPage *usedReceivingAddressesPage;
     MasternodeList *masternodeListPage;
     TPoSPage* tposPage;
+    InformationPage* informationPage;
 
 
     TransactionsDialog* transactionsDialog;
@@ -91,7 +94,8 @@ public Q_SLOTS:
     void gotoMasternodePage();
     /** Switch to tpos page */
     void gotoTPoSPage();
-
+    /** Switch to information page */
+    void gotoInformationPage();
 
 
     /** Show Sign/Verify Message dialog and switch to sign message tab */

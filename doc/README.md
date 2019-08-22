@@ -1,41 +1,41 @@
-XSN Core
+Swyft Core
 =============
 
 Setup
 ---------------------
-XSN Core is the original XSN client and it builds the backbone of the network. It downloads and, by default, stores the entire history of XSN transactions (which is currently more than 100 GBs); depending on the speed of your computer and network connection, the synchronization process can take anywhere from a few hours to a day or more.
+Swyft Core is the original Swyft client and it builds the backbone of the network. It downloads and, by default, stores the entire history of Swyft transactions (which is currently more than 100 GBs); depending on the speed of your computer and network connection, the synchronization process can take anywhere from a few hours to a day or more.
 
-To download XSN Core, visit [xsncore.org](https://xsncore.org/en/releases/).
+To download Swyft Core, visit [swyft.network](https://swyft.network/en/releases/).
 
 Running
 ---------------------
-The following are some helpful notes on how to run XSN on your native platform.
+The following are some helpful notes on how to run Swyft on your native platform.
 
 ### Unix
 
 Unpack the files into a directory and run:
 
-- `bin/xsn-qt` (GUI) or
-- `bin/xsnd` (headless)
+- `bin/swyft-qt` (GUI) or
+- `bin/swyftd` (headless)
 
 ### Windows
 
-Unpack the files into a directory, and then run xsn-qt.exe.
+Unpack the files into a directory, and then run swyft-qt.exe.
 
 ### OS X
 
-Drag XSN-Core to your applications folder, and then run XSN-Core.
+Drag Swyft-Qt to your applications folder, and then run Swyft-Qt.
 
 ### Need Help?
 
-* See the documentation at the [XSN Wiki](https://en.xsn.it/wiki/Main_Page)
+* See the documentation at the [Swyft Wiki](https://en.swyft.it/wiki/Main_Page)
 for help and more information.
-* Ask for help on [#xsn](http://webchat.freenode.net?channels=xsn) on Freenode. If you don't have an IRC client use [webchat here](http://webchat.freenode.net?channels=xsn).
-* Ask for help on the [XSNTalk](https://xsntalk.org/) forums, in the [Technical Support board](https://xsntalk.org/index.php?board=4.0).
+* Ask for help on [#swyft](http://webchat.freenode.net?channels=swyft) on Freenode. If you don't have an IRC client use [webchat here](http://webchat.freenode.net?channels=swyft).
+* Ask for help on the [SwyftTalk](https://swyfttalk.org/) forums, in the [Technical Support board](https://swyfttalk.org/index.php?board=4.0).
 
 Building
 ---------------------
-The following are developer notes on how to build XSN on your native platform. They are not complete guides, but include notes on the necessary libraries, compile flags, etc.
+The following are developer notes on how to build Swyft on your native platform. They are not complete guides, but include notes on the necessary libraries, compile flags, etc.
 
 - [Dependencies](dependencies.md)
 - [OS X Build Notes](build-osx.md)
@@ -47,12 +47,12 @@ The following are developer notes on how to build XSN on your native platform. T
 
 Development
 ---------------------
-The XSN repo's [root README](/README.md) contains relevant information on the development process and automated testing.
+The Swyft repo's [root README](/README.md) contains relevant information on the development process and automated testing.
 
 - [Developer Notes](developer-notes.md)
 - [Release Notes](release-notes.md)
 - [Release Process](release-process.md)
-- [Source Code Documentation (External Link)](https://dev.visucore.com/xsn/doxygen/)
+- [Source Code Documentation (External Link)](https://dev.visucore.com/swyft/doxygen/)
 - [Translation Process](translation_process.md)
 - [Translation Strings Policy](translation_strings_policy.md)
 - [Travis CI](travis-ci.md)
@@ -63,9 +63,9 @@ The XSN repo's [root README](/README.md) contains relevant information on the de
 - [Benchmarking](benchmarking.md)
 
 ### Resources
-* Discuss on the [XSNTalk](https://xsntalk.org/) forums, in the [Development & Technical Discussion board](https://xsntalk.org/index.php?board=6.0).
-* Discuss project-specific development on #xsn-core-dev on Freenode. If you don't have an IRC client use [webchat here](http://webchat.freenode.net/?channels=xsn-core-dev).
-* Discuss general XSN development on #xsn-dev on Freenode. If you don't have an IRC client use [webchat here](http://webchat.freenode.net/?channels=xsn-dev).
+* Discuss on the [SwyftTalk](https://swyfttalk.org/) forums, in the [Development & Technical Discussion board](https://swyfttalk.org/index.php?board=6.0).
+* Discuss project-specific development on #bitcoin-core-dev on Freenode. If you don't have an IRC client use [webchat here](http://webchat.freenode.net/?channels=bitcoin-core-dev).
+* Discuss general Swyft development on #swyft-dev on Freenode. If you don't have an IRC client use [webchat here](http://webchat.freenode.net/?channels=swyft-dev).
 
 ### Miscellaneous
 - [Assets Attribution](assets-attribution.md)

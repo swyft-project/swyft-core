@@ -1,4 +1,5 @@
 // Copyright (c) 2014-2017 The Dash Core developers
+// Copyright (c) 2019 The Swyft Core developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -177,7 +178,7 @@ static UniValue merchantnodelist(const JSONRPCRequest& request)
                     "  lastpaidblock  - Print the last block height a node was paid on the network\n"
                     "  lastpaidtime   - Print the last time a node was paid on the network\n"
                     "  lastseen       - Print timestamp of when a merchantnode was last seen on the network\n"
-                    "  payee          - Print XSN address associated with a merchantnode (can be additionally filtered,\n"
+                    "  payee          - Print Swyft address associated with a merchantnode (can be additionally filtered,\n"
                     "                   partial match)\n"
                     "  protocol       - Print protocol of a merchantnode (can be additionally filtered, exact match)\n"
                     "  pubkey         - Print the merchantnode (not collateral) public key\n"

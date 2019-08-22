@@ -1,26 +1,26 @@
-bin_PROGRAMS += qt/xsn-qt
-EXTRA_LIBRARIES += qt/libxsnqt.a
+bin_PROGRAMS += qt/swyft-qt
+EXTRA_LIBRARIES += qt/libswyftqt.a
 
 rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
 
-# xsn qt core #
+# swyft qt core #
 QT_TS = \
-  qt/locale/xsn_bg.ts \
-  qt/locale/xsn_de.ts \
-  qt/locale/xsn_en.ts \
-  qt/locale/xsn_es.ts \
-  qt/locale/xsn_fi.ts \
-  qt/locale/xsn_fr.ts \
-  qt/locale/xsn_it.ts \
-  qt/locale/xsn_ja.ts \
-  qt/locale/xsn_pl.ts \
-  qt/locale/xsn_pt.ts \
-  qt/locale/xsn_ru.ts \
-  qt/locale/xsn_sk.ts \
-  qt/locale/xsn_sv.ts \
-  qt/locale/xsn_vi.ts \
-  qt/locale/xsn_zh_CN.ts \
-  qt/locale/xsn_zh_TW.ts
+  qt/locale/swyft_bg.ts \
+  qt/locale/swyft_de.ts \
+  qt/locale/swyft_en.ts \
+  qt/locale/swyft_es.ts \
+  qt/locale/swyft_fi.ts \
+  qt/locale/swyft_fr.ts \
+  qt/locale/swyft_it.ts \
+  qt/locale/swyft_ja.ts \
+  qt/locale/swyft_pl.ts \
+  qt/locale/swyft_pt.ts \
+  qt/locale/swyft_ru.ts \
+  qt/locale/swyft_sk.ts \
+  qt/locale/swyft_sv.ts \
+  qt/locale/swyft_vi.ts \
+  qt/locale/swyft_zh_CN.ts \
+  qt/locale/swyft_zh_TW.ts
 
 QT_FORMS_UI = \
   qt/forms/addressbookpage.ui \
@@ -28,6 +28,7 @@ QT_FORMS_UI = \
   qt/forms/coincontroldialog.ui \
   qt/forms/editaddressdialog.ui \
   qt/forms/helpmessagedialog.ui \
+  qt/forms/informationpage.ui \
   qt/forms/intro.ui \
   qt/forms/modaloverlay.ui \
   qt/forms/masternodelist.ui \
@@ -60,6 +61,7 @@ QT_MOC_CPP = \
   qt/moc_csvmodelwriter.cpp \
   qt/moc_editaddressdialog.cpp \
   qt/moc_guiutil.cpp \
+  qt/moc_informationpage.cpp \
   qt/moc_intro.cpp \
   qt/moc_macdockiconhandler.cpp \
   qt/moc_macnotificationhandler.cpp \
@@ -101,16 +103,16 @@ BITCOIN_MM = \
   qt/macnotificationhandler.mm
 
 QT_MOC = \
-  qt/xsn.moc \
+  qt/swyft.moc \
   qt/bitcoinamountfield.moc \
   qt/intro.moc \
   qt/overviewpage.moc \
   qt/rpcconsole.moc
 
-QT_QRC_CPP = qt/qrc_xsn.cpp
-QT_QRC = qt/xsn.qrc
-QT_QRC_LOCALE_CPP = qt/qrc_xsn_locale.cpp
-QT_QRC_LOCALE = qt/xsn_locale.qrc
+QT_QRC_CPP = qt/qrc_swyft.cpp
+QT_QRC = qt/swyft.qrc
+QT_QRC_LOCALE_CPP = qt/qrc_swyft_locale.cpp
+QT_QRC_LOCALE = qt/swyft_locale.qrc
 
 PROTOBUF_CC = qt/paymentrequest.pb.cc
 PROTOBUF_H = qt/paymentrequest.pb.h
@@ -133,6 +135,7 @@ BITCOIN_QT_H = \
   qt/editaddressdialog.h \
   qt/guiconstants.h \
   qt/guiutil.h \
+  qt/informationpage.h \
   qt/intro.h \
   qt/macdockiconhandler.h \
   qt/macnotificationhandler.h \
@@ -177,8 +180,8 @@ BITCOIN_QT_H = \
   qt/winshutdownmonitor.h
 
 RES_ICONS = \
-  qt/res/icons/xsn.ico \
-  qt/res/icons/xsn.png \
+  qt/res/icons/swyft.ico \
+  qt/res/icons/swyft.png \
   qt/res/icons/chevron.png \
   qt/res/icons/warning.png \
   qt/res/icons/light/address-book.png \
@@ -218,6 +221,7 @@ RES_ICONS = \
   qt/res/icons/light/tx_inout.png \
   qt/res/icons/light/lock_closed.png \
   qt/res/icons/light/lock_open.png \
+  qt/res/icons/light/info.png \
   qt/res/icons/light/key.png \
   qt/res/icons/light/filesave.png \
   qt/res/icons/light/debugwindow.png \
@@ -274,6 +278,7 @@ RES_ICONS = \
   qt/res/icons/dark/tx_inout.png \
   qt/res/icons/dark/lock_closed.png \
   qt/res/icons/dark/lock_open.png \
+  qt/res/icons/dark/info.png \
   qt/res/icons/dark/key.png \
   qt/res/icons/dark/filesave.png \
   qt/res/icons/dark/debugwindow.png \
@@ -332,6 +337,7 @@ BITCOIN_QT_CPP += \
   qt/coincontroldialog.cpp \
   qt/coincontroltreewidget.cpp \
   qt/editaddressdialog.cpp \
+  qt/informationpage.cpp \
   qt/masternodelist.cpp \
   qt/openuridialog.cpp \
   qt/overviewpage.cpp \
@@ -365,6 +371,8 @@ RES_IMAGES = \
   qt/res/images/pages/send/dark/send-button.png \
   qt/res/images/pages/send/dark/send-header.png \
   qt/res/images/pages/send/light/send-header.png \
+  qt/res/images/navigation-buttons/dark/information-activated.png \
+  qt/res/images/navigation-buttons/dark/information-button.png \
   qt/res/images/navigation-buttons/dark/masternodes-activated.png \
   qt/res/images/navigation-buttons/dark/masternodes-button.png \
   qt/res/images/navigation-buttons/dark/overview-activated.png \
@@ -396,6 +404,8 @@ RES_IMAGES = \
   qt/res/images/pages/overview/light/overview_box.png \
   qt/res/images/other/dark/logo_left_testnet.png \
   qt/res/images/other/dark/splash.png \
+  qt/res/images/navigation-buttons/light/information-activated.png \
+  qt/res/images/navigation-buttons/light/information-button.png \
   qt/res/images/navigation-buttons/light/masternodes-activated.png \
   qt/res/images/navigation-buttons/light/masternodes-button.png \
   qt/res/images/navigation-buttons/light/overview-activated.png \
@@ -462,20 +472,20 @@ RES_MOVIES = \
     qt/res/movies/spinner-034.png \
     qt/res/movies/spinner-035.png
 
-BITCOIN_RC = qt/res/xsn-qt-res.rc
+BITCOIN_RC = qt/res/swyft-qt-res.rc
 
 BITCOIN_QT_INCLUDES = -I$(builddir)/qt -I$(srcdir)/qt -I$(srcdir)/qt/forms \
   -I$(builddir)/qt/forms -DQT_NO_KEYWORDS
 
-qt_libxsnqt_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(BITCOIN_QT_INCLUDES) \
+qt_libswyftqt_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(BITCOIN_QT_INCLUDES) \
   $(QT_INCLUDES) $(QT_DBUS_INCLUDES) $(PROTOBUF_CFLAGS) $(QR_CFLAGS)
-qt_libxsnqt_a_CXXFLAGS = $(AM_CXXFLAGS) $(QT_PIE_FLAGS)
-qt_libxsnqt_a_OBJCXXFLAGS = $(AM_OBJCXXFLAGS) $(QT_PIE_FLAGS)
+qt_libswyftqt_a_CXXFLAGS = $(AM_CXXFLAGS) $(QT_PIE_FLAGS)
+qt_libswyftqt_a_OBJCXXFLAGS = $(AM_OBJCXXFLAGS) $(QT_PIE_FLAGS)
 
-qt_libxsnqt_a_SOURCES = $(BITCOIN_QT_CPP) $(BITCOIN_QT_H) $(QT_FORMS_UI) \
+qt_libswyftqt_a_SOURCES = $(BITCOIN_QT_CPP) $(BITCOIN_QT_H) $(QT_FORMS_UI) \
   $(QT_QRC) $(QT_QRC_LOCALE) $(QT_TS) $(PROTOBUF_PROTO) $(RES_ICONS) $(RES_IMAGES) $(RES_CSS) $(RES_MOVIES)
 
-nodist_qt_libxsnqt_a_SOURCES = $(QT_MOC_CPP) $(QT_MOC) $(PROTOBUF_CC) \
+nodist_qt_libswyftqt_a_SOURCES = $(QT_MOC_CPP) $(QT_MOC) $(PROTOBUF_CC) \
   $(PROTOBUF_H) $(QT_QRC_CPP) $(QT_QRC_LOCALE_CPP)
 
 # forms/foo.h -> forms/ui_foo.h
@@ -484,70 +494,70 @@ QT_FORMS_H=$(join $(dir $(QT_FORMS_UI)),$(addprefix ui_, $(notdir $(QT_FORMS_UI:
 # Most files will depend on the forms and moc files as includes. Generate them
 # before anything else.
 $(QT_MOC): $(QT_FORMS_H)
-$(qt_libxsnqt_a_OBJECTS) $(qt_xsn_qt_OBJECTS) : | $(QT_MOC)
+$(qt_libswyftqt_a_OBJECTS) $(qt_swyft_qt_OBJECTS) : | $(QT_MOC)
 
 #Generating these with a half-written protobuf header leads to wacky results.
 #This makes sure it's done.
 $(QT_MOC): $(PROTOBUF_H)
 $(QT_MOC_CPP): $(PROTOBUF_H)
 
-# xsn-qt binary #
-qt_xsn_qt_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(BITCOIN_QT_INCLUDES) \
+# swyft-qt binary #
+qt_swyft_qt_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(BITCOIN_QT_INCLUDES) \
   $(QT_INCLUDES) $(PROTOBUF_CFLAGS) $(QR_CFLAGS)
-qt_xsn_qt_CXXFLAGS = $(AM_CXXFLAGS) $(QT_PIE_FLAGS)
+qt_swyft_qt_CXXFLAGS = $(AM_CXXFLAGS) $(QT_PIE_FLAGS)
 
-qt_xsn_qt_SOURCES = qt/xsn.cpp
+qt_swyft_qt_SOURCES = qt/swyft.cpp
 if TARGET_DARWIN
-  qt_xsn_qt_SOURCES += $(BITCOIN_MM)
+  qt_swyft_qt_SOURCES += $(BITCOIN_MM)
 endif
 if TARGET_WINDOWS
-  qt_xsn_qt_SOURCES += $(BITCOIN_RC)
+  qt_swyft_qt_SOURCES += $(BITCOIN_RC)
 endif
-qt_xsn_qt_LDADD = qt/libxsnqt.a $(LIBBITCOIN_SERVER)
+qt_swyft_qt_LDADD = qt/libswyftqt.a $(LIBBITCOIN_SERVER)
 #if ENABLE_WALLET
-qt_xsn_qt_LDADD += $(LIBBITCOIN_UTIL) $(LIBBITCOIN_WALLET)
+qt_swyft_qt_LDADD += $(LIBBITCOIN_UTIL) $(LIBBITCOIN_WALLET)
 #endif
 if ENABLE_ZMQ
-qt_xsn_qt_LDADD += $(LIBBITCOIN_ZMQ) $(ZMQ_LIBS)
+qt_swyft_qt_LDADD += $(LIBBITCOIN_ZMQ) $(ZMQ_LIBS)
 endif
-qt_xsn_qt_LDADD += $(LIBBITCOIN_CLI) $(LIBBITCOIN_COMMON) $(LIBBITCOIN_UTIL) $(LIBBITCOIN_CONSENSUS) $(LIBBITCOIN_CRYPTO) $(LIBUNIVALUE) $(LIBLEVELDB) $(LIBLEVELDB_SSE42) $(LIBMEMENV) \
+qt_swyft_qt_LDADD += $(LIBBITCOIN_CLI) $(LIBBITCOIN_COMMON) $(LIBBITCOIN_UTIL) $(LIBBITCOIN_CONSENSUS) $(LIBBITCOIN_CRYPTO) $(LIBUNIVALUE) $(LIBLEVELDB) $(LIBLEVELDB_SSE42) $(LIBMEMENV) \
   $(BOOST_LIBS) $(QT_LIBS) $(QT_DBUS_LIBS) $(QR_LIBS) $(PROTOBUF_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(LIBSECP256K1) \
   $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS)
-qt_xsn_qt_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(QT_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
-qt_xsn_qt_LIBTOOLFLAGS = $(AM_LIBTOOLFLAGS) --tag CXX
+qt_swyft_qt_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(QT_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+qt_swyft_qt_LIBTOOLFLAGS = $(AM_LIBTOOLFLAGS) --tag CXX
 
 #locale/foo.ts -> locale/foo.qm
 QT_QM=$(QT_TS:.ts=.qm)
 
 SECONDARY: $(QT_QM)
 
-qt/xsnstrings.cpp: $(libxsn_server_a_SOURCES) $(libxsn_wallet_a_SOURCES) $(libxsn_common_a_SOURCES) $(libxsn_zmq_a_SOURCES) $(libxsn_consensus_a_SOURCES) $(libxsn_util_a_SOURCES)
+qt/swyftstrings.cpp: $(libswyft_server_a_SOURCES) $(libswyft_wallet_a_SOURCES) $(libswyft_common_a_SOURCES) $(libswyft_zmq_a_SOURCES) $(libswyft_consensus_a_SOURCES) $(libswyft_util_a_SOURCES)
 	@test -n $(XGETTEXT) || echo "xgettext is required for updating translations"
 	$(AM_V_GEN) cd $(srcdir); XGETTEXT=$(XGETTEXT) ../share/qt/extract_strings_qt.py $^
 
-translate: qt/xsnstrings.cpp $(QT_FORMS_UI) $(QT_FORMS_UI) $(BITCOIN_QT_CPP) qt/xsn.cpp $(BITCOIN_QT_H) $(BITCOIN_MM)
+translate: qt/swyftstrings.cpp $(QT_FORMS_UI) $(QT_FORMS_UI) $(BITCOIN_QT_CPP) qt/swyft.cpp $(BITCOIN_QT_H) $(BITCOIN_MM)
 	@test -n $(LUPDATE) || echo "lupdate is required for updating translations"
-	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(LUPDATE) $^ -locations relative -no-obsolete -ts qt/locale/xsn_en.ts
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(LUPDATE) $^ -locations relative -no-obsolete -ts qt/locale/swyft_en.ts
 
 $(QT_QRC_LOCALE_CPP): $(QT_QRC_LOCALE) $(QT_QM)
 	@test -f $(RCC)
 	@test -f $(@D)/$(<F) || cp -f $< $(@D)
-	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(RCC) $(RCCFLAGS) -name xsn_locale $(@D)/$(<F) | \
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(RCC) $(RCCFLAGS) -name swyft_locale $(@D)/$(<F) | \
 	  $(SED) -e '/^\*\*.*Created:/d' -e '/^\*\*.*by:/d' > $@
 
 $(QT_QRC_CPP): $(QT_QRC) $(QT_FORMS_H) $(RES_ICONS) $(RES_IMAGES) $(RES_CSS) $(RES_MOVIES) $(PROTOBUF_H)
 	@test -f $(RCC)
-	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(RCC) $(RCCFLAGS) -name xsn $< | \
+	$(AM_V_GEN) QT_SELECT=$(QT_SELECT) $(RCC) $(RCCFLAGS) -name swyft $< | \
 	  $(SED) -e '/^\*\*.*Created:/d' -e '/^\*\*.*by:/d' > $@
 
-CLEAN_QT = $(nodist_qt_libxsnqt_a_SOURCES) $(QT_QM) $(QT_FORMS_H) qt/*.gcda qt/*.gcno
+CLEAN_QT = $(nodist_qt_libswyftqt_a_SOURCES) $(QT_QM) $(QT_FORMS_H) qt/*.gcda qt/*.gcno
 
 CLEANFILES += $(CLEAN_QT)
 
-xsn_qt_clean: FORCE
-	rm -f $(CLEAN_QT) $(qt_libxsnqt_a_OBJECTS) $(qt_xsn_qt_OBJECTS) qt/xsn-qt$(EXEEXT) $(libxsnQT)
+swyft_qt_clean: FORCE
+	rm -f $(CLEAN_QT) $(qt_libswyftqt_a_OBJECTS) $(qt_swyft_qt_OBJECTS) qt/swyft-qt$(EXEEXT) $(libswyftQT)
 
-xsn_qt : qt/xsn-qt$(EXEEXT)
+swyft_qt : qt/swyft-qt$(EXEEXT)
 
 ui_%.h: %.ui
 	@test -f $(UIC)

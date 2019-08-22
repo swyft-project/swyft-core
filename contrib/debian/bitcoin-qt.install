@@ -1,6 +1,6 @@
-usr/local/bin/xsn-qt usr/bin
-share/pixmaps/xsn32.xpm usr/share/pixmaps
-share/pixmaps/xsn16.xpm usr/share/pixmaps
-share/pixmaps/xsn128.png usr/share/pixmaps
-debian/xsn-qt.desktop usr/share/applications
-debian/xsn-qt.protocol usr/share/kde4/services/
+usr/local/bin/swyft-qt usr/bin
+share/pixmaps/swyft32.xpm usr/share/pixmaps
+share/pixmaps/swyft16.xpm usr/share/pixmaps
+share/pixmaps/swyft128.png usr/share/pixmaps
+debian/swyft-qt.desktop usr/share/applications
+debian/swyft-qt.protocol usr/share/kde4/services/

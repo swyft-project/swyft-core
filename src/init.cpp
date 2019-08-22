@@ -1,10 +1,11 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2017 The Bitcoin Core developers
+// Copyright (c) 2019 The Swyft Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include <config/xsn-config.h>
+#include <config/swyft-config.h>
 #endif
 
 #include <init.h>
@@ -56,7 +57,7 @@
 #include <activemasternode.h>
 #include <instantx.h>
 #include <wallet/wallet.h>
-#include <net_processing_xsn.h>
+#include <net_processing_swyft.h>
 #include <masternodeman.h>
 #include <masternode-payments.h>
 #include <tpos/merchantnodeman.h>
@@ -164,7 +165,7 @@ bool ShutdownRequested()
 /**
  * This is a minimally invasive approach to shutdown on LevelDB read errors from the
  * chainstate, while keeping user interface out of the common library, which is shared
- * between xsnd, and xsn-qt and non-server tools.
+ * between swyftd, and swyft-qt and non-server tools.
 */
 class CCoinsViewErrorCatcher final : public CCoinsViewBacked
 {
@@ -285,7 +286,7 @@ void Shutdown()
     /// for example if the data directory was found to be locked.
     /// Be sure that anything that writes files or flushes caches only does this if the respective
     /// module was initialized.
-    RenameThread("xsn-shutoff");
+    RenameThread("swyft-shutoff");
     mempool.AddTransactionsUpdated(1);
 
     StopHTTPRPC();
@@ -625,8 +626,8 @@ void SetupServerArgs()
 
 std::string LicenseInfo()
 {
-    const std::string URL_SOURCE_CODE = "<https://github.com/X9Developers/XSN>";
-    const std::string URL_WEBSITE = "<https://stakenet.io/";
+    const std::string URL_SOURCE_CODE = "<https://github.com/swyft-project/swyft-core>";
+    const std::string URL_WEBSITE = "<https://swyft.network/";
 
     return CopyrightHolders(strprintf(_("Copyright (C) %i-%i"), 2009, COPYRIGHT_YEAR) + " ") + "\n" +
             "\n" +
@@ -731,7 +732,7 @@ static void CleanupBlockRevFiles()
 static void ThreadImport(std::vector<fs::path> vImportFiles)
 {
     const CChainParams& chainparams = Params();
-    RenameThread("xsn-loadblk");
+    RenameThread("swyft-loadblk");
     ScheduleBatchPriority();
 
     {
@@ -804,7 +805,7 @@ static void ThreadImport(std::vector<fs::path> vImportFiles)
 }
 
 /** Sanity checks
- *  Ensure that XSN is running in a usable environment with all
+ *  Ensure that Swyft is running in a usable environment with all
  *  necessary library support.
  */
 static bool InitSanityCheck(void)
@@ -1274,7 +1275,7 @@ bool AppInitParameterInteraction()
 
 static bool LockDataDirectory(bool probeOnly)
 {
-    // Make sure only a single XSN process is using the data directory.
+    // Make sure only a single Swyft process is using the data directory.
     fs::path datadir = GetDataDir();
     if (!DirIsWritable(datadir)) {
         return InitError(strprintf(_("Cannot write to data directory '%s'; check permissions."), datadir.string()));
@@ -1467,9 +1468,9 @@ bool AppInitMain()
     // Warn about relative -datadir path.
     if (gArgs.IsArgSet("-datadir") && !fs::path(gArgs.GetArg("-datadir", "")).is_absolute()) {
         LogPrintf("Warning: relative datadir option '%s' specified, which will be interpreted relative to the " /* Continued */
-                  "current working directory '%s'. This is fragile, because if xsn is started in the future "
+                  "current working directory '%s'. This is fragile, because if swyft is started in the future "
                   "from a different location, it will be unable to locate the current data files. There could "
-                  "also be data loss if xsn is started while in a temporary directory.\n",
+                  "also be data loss if swyft is started while in a temporary directory.\n",
                   gArgs.GetArg("-datadir", ""), fs::current_path().string());
     }
 
@@ -1911,16 +1912,16 @@ bool AppInitMain()
 
     LoadExtensionsDataCaches();
 
-    // ********************************************************* Step 11c: update block tip in XSN modules
+    // ********************************************************* Step 11c: update block tip in Swyft modules
 
     // force UpdatedBlockTip to initialize nCachedBlockHeight for DS, MN payments and budgets
     // but don't call it directly to prevent triggering of other listeners like zmq etc.
     // GetMainSignals().UpdatedBlockTip(chainActive.Tip());
     pdsNotificationInterface->InitializeCurrentBlockTip();
 
-    // ********************************************************* Step 11d: start thread for xsn extensions
+    // ********************************************************* Step 11d: start thread for swyft extensions
 
-    threadGroup.create_thread(boost::bind(net_processing_xsn::ThreadProcessExtensions, g_connman.get()));
+    threadGroup.create_thread(boost::bind(net_processing_swyft::ThreadProcessExtensions, g_connman.get()));
 
     // ********************************************************* Step 12: start node
 

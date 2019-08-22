@@ -1,4 +1,5 @@
 // Copyright (c) 2011-2017 The Bitcoin Core developers
+// Copyright (c) 2019 The Swyft Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -18,10 +19,10 @@ BitcoinUnits::BitcoinUnits(QObject *parent):
 QList<BitcoinUnits::Unit> BitcoinUnits::availableUnits()
 {
     QList<BitcoinUnits::Unit> unitlist;
-    unitlist.append(XSN);
-    unitlist.append(mXSN);
-    unitlist.append(uXSN);
-    // unitlist.append(duffs);
+    unitlist.append(SWYFT);
+    unitlist.append(mSWYFT);
+    unitlist.append(uSWYFT);
+    // unitlist.append(sats);
     return unitlist;
 }
 
@@ -29,10 +30,10 @@ bool BitcoinUnits::valid(int unit)
 {
     switch(unit)
     {
-    case XSN:
-    case mXSN:
-    case uXSN:
-    case duffs:
+    case SWYFT:
+    case mSWYFT:
+    case uSWYFT:
+    case sats:
         return true;
     default:
         return false;
@@ -43,10 +44,10 @@ QString BitcoinUnits::longName(int unit)
 {
     switch(unit)
     {
-    case XSN: return QString("XSN");
-    case mXSN: return QString("mXSN");
-    case uXSN: return QString::fromUtf8("µXSN");
-    case duffs: return QString("duffs");
+    case SWYFT: return QString("SWYFT");
+    case mSWYFT: return QString("mSWYFT");
+    case uSWYFT: return QString::fromUtf8("µSWYFT");
+    case sats: return QString("sats");
     default: return QString("???");
     }
 }
@@ -55,8 +56,8 @@ QString BitcoinUnits::shortName(int unit)
 {
     switch(unit)
     {
-    case uXSN: return QString::fromUtf8("µXSN");
-    case duffs: return QString("duffs");
+    case uSWYFT: return QString::fromUtf8("µSWYFT");
+    case sats: return QString("sats");
     default: return longName(unit);
     }
 }
@@ -65,10 +66,10 @@ QString BitcoinUnits::description(int unit)
 {
     switch(unit)
     {
-    case XSN: return QString("XSN");
-    case mXSN: return QString("Milli-XSN (1 / 1" THIN_SP_UTF8 "000)");
-    case uXSN: return QString("Micro-XSN (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
-    case duffs: return QString("Ten Nano-XSN (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+    case SWYFT: return QString("SWYFT");
+    case mSWYFT: return QString("Milli-SWYFT (1 / 1" THIN_SP_UTF8 "000)");
+    case uSWYFT: return QString("Micro-SWYFT (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+    case sats: return QString("Ten Nano-SWYFT (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
     default: return QString("???");
     }
 }
@@ -77,10 +78,10 @@ qint64 BitcoinUnits::factor(int unit)
 {
     switch(unit)
     {
-    case XSN: return 100000000;
-    case mXSN: return 100000;
-    case uXSN: return 100;
-    case duffs: return 1;
+    case SWYFT: return 100000000;
+    case mSWYFT: return 100000;
+    case uSWYFT: return 100;
+    case sats: return 1;
     default: return 100000000;
     }
 }
@@ -89,10 +90,10 @@ int BitcoinUnits::decimals(int unit)
 {
     switch(unit)
     {
-    case XSN: return 8;
-    case mXSN: return 5;
-    case uXSN: return 2;
-    case duffs: return 0;
+    case SWYFT: return 8;
+    case mSWYFT: return 5;
+    case uSWYFT: return 2;
+    case sats: return 0;
     default: return 0;
     }
 }
