@@ -1,38 +1,37 @@
-XSN Core integration/staging tree
+SWYFT Core integration/staging tree
 =====================================
 
-[![Build Status](https://api.travis-ci.org/X9Developers/XSN.svg?branch=master)](https://travis-ci.org/X9Developers/XSN)
 
-Stakenet Cloud
+SWYFT Home
 ----------------
 
-https://stakenet.io
+https://swyft.network
 
-What is XSN?
+What is SWYFT?
 ----------------
 
-XSN is an experimental digital currency that enables instant payments to
-anyone, anywhere in the world. XSN uses peer-to-peer technology to operate
+SWYFT is an experimental digital currency that enables instant payments to
+anyone, anywhere in the world. SWYFT uses peer-to-peer technology to operate
 with no central authority: managing transactions and issuing money are carried
-out collectively by the network. XSN Core is the name of open source
+out collectively by the network. SWYFT Core is the name of open source
 software which enables the use of this currency.
 
 For more information, as well as an immediately useable, binary version of
-the XSN Core software, see https://stakenet.io/, or read the
-[original whitepaper](https://stakenet.io/Whitepaper_Stakenet_V3.0_EN.pdf).
+the XSN Core software, see https://swyft.network/, or read the
+[original whitepaper](https://www.apple.com).
 
 License
 -------
 
-XSN Core is released under the terms of the MIT license. See [COPYING](COPYING) for more
+SWYFT Core is released under the terms of the MIT license. See [COPYING](COPYING) for more
 information or see https://opensource.org/licenses/MIT.
 
 Development Process
 -------------------
 
 The `master` branch is regularly built and tested, but is not guaranteed to be
-completely stable. [Tags](https://github.com/X9Developers/XSN/tags) are created
-regularly to indicate new official, stable release versions of XSN Core.
+completely stable. [Tags](https://github.com/swyft-project/swyft-core/tags) are created
+regularly to indicate new official, stable release versions of SWYFT Core.
 
 The contribution workflow is described in [CONTRIBUTING.md](CONTRIBUTING.md).
 
@@ -67,63 +66,49 @@ not straightforward.
 Running with Docker
 -------
 
-If you are already familiar with Docker, then running XSN with Docker might be the the easier method for you. To run XSN using this method, first install [Docker](https://docs.docker.com/install/). After this you may
+If you are already familiar with Docker, then running SWYFT with Docker might be the the easier method for you. To run XSN using this method, first install [Docker](https://docs.docker.com/install/). After this you may
 continue with the following instructions.
 
-Please note that we currently don't support the GUI when running with Docker. Therefore, you can only use RPC (via HTTP or the `xsn-cli` utility) to interact with XSN via this method.
+Please note that we currently don't support the GUI when running with Docker. Therefore, you can only use RPC (via HTTP or the `swyft-cli` utility) to interact with SWYFT via this method.
 
 Right now we don't store the image in docker hub, so you need to build it on your own:
 
 ```sh
-docker build . -t xsn
+docker build . -t swyft
 ```
 
-Start XSN daemon: ( you might consider to bind custom ports in case you want to run a node or make usage of the json-rpc api [https://docs.docker.com/engine/reference/run/](https://docs.docker.com/engine/reference/run/))
+Start SWYFT daemon: ( you might consider to bind custom ports in case you want to run a node or make usage of the json-rpc api [https://docs.docker.com/engine/reference/run/](https://docs.docker.com/engine/reference/run/))
 
 ```sh
-docker run -d -P --name xsn xsn:latest
+docker run -d -P --name swyft swyft:latest
 ```
 
 View current block count (this might take a while since the daemon needs to find other nodes and download blocks first):
 
 ```sh
-docker exec xsn xsn-cli getblockcount
+docker exec swyft swyft-cli getblockcount
 ```
 
 View connected nodes:
 
 ```sh
-docker exec xsn xsn-cli getpeerinfo
+docker exec swyft swyft-cli getpeerinfo
 ```
 
 Stop daemon:
 
 ```sh
-docker stop xsn
+docker stop swyft
 ```
 
 Backup wallet:
 
 ```sh
-docker cp xsn:/home/xsn/.xsncore/wallet.dat .
+docker cp swyft:/home/swyft/.swyftcore/wallet.dat .
 ```
 
 Start daemon again:
 
 ```sh
-docker start xsn
+docker start swyft
 ```
-
-Translations
-------------
-
-Changes to translations as well as new translations can be submitted to
-[XSN Core's Transifex page](https://www.transifex.com/projects/p/xsn/).
-
-Translations are periodically pulled from Transifex and merged into the git repository. See the
-[translation process](doc/translation_process.md) for details on how this works.
-
-**Important**: We do not accept translation changes as GitHub pull requests because the next
-pull from Transifex would automatically overwrite them again.
-
-Translators should also subscribe to the [mailing list](https://groups.google.com/forum/#!forum/xsn-translators).
