@@ -1718,7 +1718,7 @@ QGroupBox#infoGroupBox {
     background-color:transparent;
 }
 QLabel#infoComing {
-    border-image: url(:/images/res/images/pages/information/coming-soon-400) 0 0 0 0 stretch stretch;
+    border-image: url(':/images/coming-soon-400') 0 0 0 0 stretch stretch;
     /*background-image: url(':/images/pages/information/coming-soon-400');
     background-repeat:no-repeat;
     background-position:center;
