@@ -191,7 +191,7 @@
         <file>res/images/navigation-buttons/dark/tpos-button.png</file>
         <file>res/images/pages/tpos/dark/tpos-header.png</file>
         <file>res/images/pages/tpos/light/tpos-header.png</file>
-        <file alias="coming-soon-400">res/images/pages/information/coming-soon-400.png</file>
+        <file>res/images/pages/information/coming-soon-400.png</file>
     </qresource>
     <qresource prefix="/movies">
         <file alias="spinner-000">res/movies/spinner-000.png</file>
