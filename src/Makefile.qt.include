@@ -428,7 +428,8 @@ RES_IMAGES = \
   qt/res/images/navigation-buttons/dark/tpos-activated.png \
   qt/res/images/navigation-buttons/dark/tpos-button.png \
   qt/res/images/pages/tpos/dark/tpos-header.png \
-  qt/res/images/pages/tpos/light/tpos-header.png 
+  qt/res/images/pages/tpos/light/tpos-header.png \
+  qt/res/images/pages/information/coming-soon-400.png
 
 RES_CSS = \
   qt/res/css/light.css \
