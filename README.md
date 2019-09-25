@@ -17,8 +17,8 @@ out collectively by the network. SWYFT Core is the name of open source
 software which enables the use of this currency.
 
 For more information, as well as an immediately useable, binary version of
-the XSN Core software, see https://swyft.network/, or read the
-[original whitepaper](https://www.apple.com).
+the SWYFT Core software, see https://www.swyft.network/, or read the
+[original whitepaper](https://www.swyft.network).
 
 License
 -------
