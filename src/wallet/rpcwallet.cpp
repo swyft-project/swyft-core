@@ -2504,7 +2504,6 @@ static UniValue walletpassphrase(const JSONRPCRequest& request)
     if (!EnsureWalletIsAvailable(pwallet, request.fHelp)) {
         return NullUniValue;
     }
-
     if (request.fHelp || request.params.size() < 2 || request.params.size() > 3) {
         throw std::runtime_error(
                     "walletpassphrase \"passphrase\" timeout\n"
@@ -2513,7 +2512,7 @@ static UniValue walletpassphrase(const JSONRPCRequest& request)
                     "\nArguments:\n"
                     "1. \"passphrase\"     (string, required) The wallet passphrase\n"
                     "2. timeout            (numeric, required) The time to keep the decryption key in seconds; capped at 100000000 (~3 years).\n"
-                    "3. stakingOnly        (boolean, optional, default=flase) If is true sending functions are disabled."
+                    "3. stakingOnly        (boolean, optional, default=false) If is true sending functions are disabled."
                     "\nNote:\n"
                     "Issuing the walletpassphrase command while the wallet is already unlocked will set a new unlock\n"
                     "time that overrides the old one.\n"
@@ -2527,6 +2526,7 @@ static UniValue walletpassphrase(const JSONRPCRequest& request)
                     );
     }
 
+
     LOCK2(cs_main, pwallet->cs_wallet);
 
     if (!pwallet->IsCrypted()) {
@@ -2539,11 +2539,12 @@ static UniValue walletpassphrase(const JSONRPCRequest& request)
     // TODO: get rid of this .c_str() by implementing SecureString::operator=(std::string)
     // Alternately, find a way to make request.params[0] mlock()'d to begin with.
     strWalletPass = request.params[0].get_str().c_str();
-  
+
     bool stakingOnly = false;
-    if (request.params.size() == 3)
+    if (request.params.size() == 3) {
         RPCTypeCheckArgument(request.params[2], UniValue::VBOOL);
         stakingOnly = request.params[2].get_bool();
+    }
 
     if (!pwallet->IsLocked() && pwallet->fWalletUnlockStakingOnly && stakingOnly)
         throw JSONRPCError(RPC_WALLET_ALREADY_UNLOCKED, "Error: Wallet is already unlocked.");
@@ -2560,7 +2561,7 @@ static UniValue walletpassphrase(const JSONRPCRequest& request)
                 "Stores the wallet decryption key in memory for <timeout> seconds.");
 
     pwallet->TopUpKeyPool();
-    
+
     // Get the timeout
     int64_t nSleepTime = request.params[1].get_int64();
     // Timeout cannot be negative, otherwise it will relock immediately
